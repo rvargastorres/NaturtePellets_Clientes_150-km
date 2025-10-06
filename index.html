@@ -254,109 +254,42 @@
         .btn-delete { background: #e74c3c; color: white; }
         .btn-view { background: #27ae60; color: white; }
 
-        /* POPUP MEJORADO - DRAGGABLE Y RESIZABLE */
-        .modal-popup {
+        .modal {
             display: none;
             position: fixed;
-            z-index: 2000;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            min-width: 500px;
-            max-width: 90vw;
-            min-height: 400px;
-            max-height: 90vh;
-            overflow: hidden;
-            resize: both;
-            border: 2px solid #d4af37;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
         }
 
-        .modal-header {
-            background: linear-gradient(135deg, #5a4a3a 0%, #6b4d32 100%);
-            color: white;
-            padding: 15px 20px;
-            cursor: move;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            user-select: none;
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 600px;
         }
 
-        .modal-title {
-            font-size: 1.3em;
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
             font-weight: bold;
-        }
-
-        .modal-controls {
-            display: flex;
-            gap: 10px;
-        }
-
-        .modal-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
             cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s;
         }
 
-        .modal-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .modal-content-popup {
-            padding: 0;
-            height: calc(100% - 60px);
-            overflow-y: auto;
-        }
-
-        .tabs {
-            display: flex;
-            background: #f8f6f3;
-            border-bottom: 2px solid #d4af37;
-        }
-
-        .tab {
-            padding: 15px 20px;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            color: #666;
-            font-weight: bold;
-            transition: all 0.3s;
-            flex: 1;
-            text-align: center;
-        }
-
-        .tab.active {
-            background: white;
-            color: #5a4a3a;
-            border-bottom: 3px solid #d4af37;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 25px;
-            height: calc(100% - 60px);
-            overflow-y: auto;
-        }
-
-        .tab-content.active {
-            display: block;
+        .close:hover {
+            color: #000;
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-bottom: 20px;
         }
 
         .form-group {
@@ -374,103 +307,9 @@
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: 2px solid #d4af37;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .pain-points {
-            background: #ffebee;
-            border-left: 4px solid #e74c3c;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-        }
-
-        .pain-points h4 {
-            color: #c62828;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .pain-points ul {
-            margin-left: 20px;
-        }
-
-        .pain-points li {
-            margin-bottom: 8px;
-            color: #d32f2f;
-        }
-
-        .value-proposition {
-            background: #e8f5e8;
-            border-left: 4px solid #4caf50;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-        }
-
-        .value-proposition h4 {
-            color: #2e7d32;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .value-proposition ul {
-            margin-left: 20px;
-        }
-
-        .value-proposition li {
-            margin-bottom: 8px;
-            color: #388e3c;
-        }
-
-        .calculator-section {
-            background: #f0f8ff;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .calculator-section h4 {
-            color: #1976d2;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .calc-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .calc-result {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .calc-result h5 {
-            color: #1976d2;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        .calc-result .savings {
-            font-size: 2em;
-            font-weight: bold;
-            color: #4caf50;
-            margin-bottom: 5px;
+            border-radius: 4px;
         }
 
         .legend {
@@ -518,15 +357,6 @@
             .client-info {
                 grid-template-columns: 1fr;
             }
-
-            .form-grid, .calc-inputs {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-popup {
-                min-width: 90vw;
-                min-height: 80vh;
-            }
         }
 
         .export-section {
@@ -546,21 +376,6 @@
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-        }
-
-        /* Animaciones */
-        .modal-popup {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .modal-popup.minimized {
-            height: 60px;
-            min-height: 60px;
-            max-height: 60px;
-        }
-
-        .modal-popup.minimized .modal-content-popup {
-            display: none;
         }
     </style>
 </head>
@@ -684,160 +499,68 @@
         </div>
     </div>
 
-    <!-- Modal Popup Mejorado -->
-    <div id="cliente-popup" class="modal-popup">
-        <div class="modal-header">
-            <div class="modal-title" id="popup-titulo">Información del Cliente</div>
-            <div class="modal-controls">
-                <button class="modal-btn" onclick="minimizePopup()" title="Minimizar">_</button>
-                <button class="modal-btn" onclick="maximizePopup()" title="Maximizar">⬜</button>
-                <button class="modal-btn" onclick="cerrarPopup()" title="Cerrar">✕</button>
-            </div>
-        </div>
-        <div class="modal-content-popup">
-            <div class="tabs">
-                <button class="tab active" onclick="cambiarTab('info')">📋 Información</button>
-                <button class="tab" onclick="cambiarTab('analisis')">💡 Análisis</button>
-                <button class="tab" onclick="cambiarTab('calculadora')">🧮 Calculadora</button>
-            </div>
-
-            <!-- Tab Información -->
-            <div id="tab-info" class="tab-content active">
-                <form id="cliente-form">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="nombre">Nombre Contacto</label>
-                            <input type="text" id="nombre" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="cargo">Cargo</label>
-                            <input type="text" id="cargo">
-                        </div>
-                        <div class="form-group">
-                            <label for="empresa">Empresa</label>
-                            <input type="text" id="empresa" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="telefono">Teléfono</label>
-                            <input type="tel" id="telefono">
-                        </div>
-                        <div class="form-group">
-                            <label for="segmento">Segmento</label>
-                            <select id="segmento" required>
-                                <option value="">Seleccionar...</option>
-                                <option value="Hotel Rural">Hotel Rural</option>
-                                <option value="Industria Agroalimentaria">Industria Agroalimentaria</option>
-                                <option value="Ayuntamiento">Ayuntamiento</option>
-                                <option value="Polígono Industrial">Polígono Industrial</option>
-                                <option value="Empresa ESE">Empresa ESE</option>
-                                <option value="Residencia/Centro">Residencia/Centro</option>
-                            </select>
-                        </div>
+    <!-- Modal Agregar/Editar Cliente -->
+    <div id="cliente-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h2 id="modal-titulo">Agregar Nuevo Cliente</h2>
+            <form id="cliente-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nombre">Nombre Contacto</label>
+                        <input type="text" id="nombre" required>
                     </div>
                     <div class="form-group">
-                        <label for="direccion">Dirección</label>
-                        <input type="text" id="direccion" required>
-                    </div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="latitud">Latitud</label>
-                            <input type="number" id="latitud" step="any" placeholder="Ej: 40.4168">
-                        </div>
-                        <div class="form-group">
-                            <label for="longitud">Longitud</label>
-                            <input type="number" id="longitud" step="any" placeholder="Ej: -3.7038">
-                        </div>
+                        <label for="cargo">Cargo</label>
+                        <input type="text" id="cargo">
                     </div>
                     <div class="form-group">
-                        <label for="volumen">Volumen Potencial (ton/año)</label>
-                        <input type="number" id="volumen" min="0">
+                        <label for="empresa">Empresa</label>
+                        <input type="text" id="empresa" required>
                     </div>
                     <div class="form-group">
-                        <label for="notas">Notas</label>
-                        <textarea id="notas" rows="3"></textarea>
+                        <label for="email">Email</label>
+                        <input type="email" id="email">
                     </div>
-                    <button type="submit" class="btn-primary">💾 Guardar Cliente</button>
-                </form>
-            </div>
-
-            <!-- Tab Análisis -->
-            <div id="tab-analisis" class="tab-content">
-                <div class="pain-points">
-                    <h4>💢 Puntos de Dolor Identificados</h4>
-                    <ul id="puntos-dolor">
-                        <li>Dependencia de combustibles fósiles costosos</li>
-                        <li>Fluctuaciones de precio energético</li>
-                        <li>Presión por certificaciones sostenibles</li>
-                        <li>Altos costes operacionales energéticos</li>
-                    </ul>
-                </div>
-
-                <div class="value-proposition">
-                    <h4>✅ Propuesta de Valor Naturpellet</h4>
-                    <ul id="propuesta-valor">
-                        <li>Pellet ENplus A1 - Máxima calidad garantizada</li>
-                        <li>Reducción 35-50% costes energéticos</li>
-                        <li>Certificaciones PEFC + Calidad Rural</li>
-                        <li>Logística especializada desde Sanchonuño</li>
-                        <li>Suministro estable y trazabilidad completa</li>
-                    </ul>
-                </div>
-
-                <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 6px;">
-                    <h4 style="color: #856404; margin-bottom: 10px;">🎯 Por qué Naturpellet</h4>
-                    <p id="porque-naturpellet" style="color: #856404;">
-                        Experiencia demostrada en el sector + capacidad logística + compromiso con calidad premium
-                    </p>
-                </div>
-            </div>
-
-            <!-- Tab Calculadora -->
-            <div id="tab-calculadora" class="tab-content">
-                <div class="calculator-section">
-                    <h4>🧮 Calculadora de Ahorro Energético</h4>
-
-                    <div class="calc-inputs">
-                        <div class="form-group">
-                            <label for="combustible-actual">Combustible Actual</label>
-                            <select id="combustible-actual" onchange="calcularAhorro()">
-                                <option value="">Seleccionar...</option>
-                                <option value="gasoleo">Gasóleo C</option>
-                                <option value="gas">Gas Natural</option>
-                                <option value="propano">Propano</option>
-                                <option value="electricidad">Electricidad</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="coste-actual">Coste Anual Actual (€)</label>
-                            <input type="number" id="coste-actual" placeholder="Ej: 45000" onchange="calcularAhorro()">
-                        </div>
-                        <div class="form-group">
-                            <label for="consumo-kwh">Consumo Anual (kWh)</label>
-                            <input type="number" id="consumo-kwh" placeholder="Se calcula automático" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="superficie-calc">Superficie (m²)</label>
-                            <input type="number" id="superficie-calc" placeholder="Ej: 500" onchange="calcularAhorro()">
-                        </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono">
                     </div>
-
-                    <div class="calc-result" id="resultado-calculo" style="display: none;">
-                        <h5>💰 Resultados del Análisis</h5>
-                        <div class="savings" id="ahorro-anual">- €</div>
-                        <div style="color: #1976d2;">
-                            <div>🔸 Ahorro anual: <span id="ahorro-euros">-</span></div>
-                            <div>🔸 Porcentaje ahorro: <span id="ahorro-porcentaje">-</span></div>
-                            <div>🔸 Toneladas pellets: <span id="toneladas-necesarias">-</span></div>
-                            <div>🔸 ROI estimado: <span id="roi-anos">-</span></div>
-                            <div>🔸 Ahorro 10 años: <span id="ahorro-10-anos">-</span></div>
-                        </div>
+                    <div class="form-group">
+                        <label for="segmento">Segmento</label>
+                        <select id="segmento" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Hotel Rural">Hotel Rural</option>
+                            <option value="Industria Agroalimentaria">Industria Agroalimentaria</option>
+                            <option value="Ayuntamiento">Ayuntamiento</option>
+                            <option value="Polígono Industrial">Polígono Industrial</option>
+                            <option value="Empresa ESE">Empresa ESE</option>
+                            <option value="Residencia/Centro">Residencia/Centro</option>
+                        </select>
                     </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" id="direccion" required>
+                </div>
+                <div class="form-group">
+                    <label for="latitud">Latitud</label>
+                    <input type="number" id="latitud" step="any" placeholder="Ej: 40.4168">
+                </div>
+                <div class="form-group">
+                    <label for="longitud">Longitud</label>
+                    <input type="number" id="longitud" step="any" placeholder="Ej: -3.7038">
+                </div>
+                <div class="form-group">
+                    <label for="volumen">Volumen Potencial (ton/año)</label>
+                    <input type="number" id="volumen" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="notas">Notas</label>
+                    <textarea id="notas" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Guardar Cliente</button>
+            </form>
         </div>
     </div>
 
@@ -858,55 +581,6 @@
             { nombre: "Biomasas Forestales", lat: 43.4833, lng: -7.2000, ciudad: "Trabada, Lugo", capacidad: "N/D" },
             { nombre: "Astillastur", lat: 43.3614, lng: -5.8593, ciudad: "Oviedo, Asturias", capacidad: "N/D" }
         ];
-
-        // Base de datos completa de clientes con análisis detallado
-        const datosAnalisis = {
-            1: {
-                puntosDolor: [
-                    "Dependencia total gasóleo calefacción temporadas invierno (6 meses)",
-                    "Costes energéticos representan 18% presupuesto operacional",
-                    "Presión huéspedes por sostenibilidad y certificaciones eco",
-                    "Logística compleja suministro combustible por ubicación montañosa"
-                ],
-                propuestaNaturpellet: [
-                    "Pellet ENplus A1 garantiza alto poder calorífico en montaña",
-                    "Logística especializada zonas rurales desde Sanchonuño",
-                    "Certificaciones PEFC + Calidad Rural refuerzan marketing eco-friendly",
-                    "Ahorro estimado 35% vs gasóleo actual (15.000€/año)"
-                ],
-                porqueNaturpellet: "Experiencia demostrada hoteles rurales + logística especializada montaña"
-            },
-            2: {
-                puntosDolor: [
-                    "Hotel 4* con alta exigencia confort térmico huéspedes",
-                    "Ubicación estratégica A-92 pero sin acceso gas natural",
-                    "Calefacción gasóleo genera 85 ton CO2/año",
-                    "Plan sostenibilidad 2025 requiere reducción 40% emisiones"
-                ],
-                propuestaNaturpellet: [
-                    "Pellet 100% pino reduce 90% emisiones CO2 vs gasóleo",
-                    "Suministro regular garantizado ubicación estratégica A-92",
-                    "Fiabilidad 24/7 esencial para operación hotelera premium",
-                    "ROI 4.2 años con subvención Junta Andalucía disponible"
-                ],
-                porqueNaturpellet: "Trazabilidad completa Tierra Pinares garantiza suministro estable"
-            },
-            3: {
-                puntosDolor: [
-                    "Control temperatura fermentación crítico (±0.5°C)",
-                    "Gas propano genera costes 45.000€/año solo calefacción naves",
-                    "Proceso vendimia requiere energía térmica 24h octubre-noviembre",
-                    "Certificación sostenible exigida distribuidores europeos"
-                ],
-                propuestaNaturpellet: [
-                    "Pellet garantiza temperatura constante sin fluctuaciones gas",
-                    "Reducción 40% costes energéticos (18.000€ ahorro/año)",
-                    "Certificación PEFC válida para exports sostenibles UE",
-                    "Experiencia sectores críticos temperatura (farmacéutico, alimentario)"
-                ],
-                porqueNaturpellet: "Control calidad laboratorio propio + homogeneidad lotes crítica procesos"
-            }
-        };
 
         // Clientes potenciales precargados
         let clientes = [
@@ -1085,26 +759,6 @@
         let markersCompetidores = [];
         let circulosCompetencia = [];
         let clienteEditando = null;
-        let popupMinimized = false;
-        let popupMaximized = false;
-
-        // Variables para hacer el popup draggable
-        let isDragging = false;
-        let currentX;
-        let currentY;
-        let initialX;
-        let initialY;
-        let xOffset = 0;
-        let yOffset = 0;
-
-        // Precios combustibles para calculadora
-        const preciosCombustibles = {
-            'gasoleo': 0.127,
-            'gas': 0.082,
-            'propano': 0.223,
-            'electricidad': 0.200,
-            'pellets': 0.063
-        };
 
         // Inicializar mapa
         function inicializarMapa() {
@@ -1130,7 +784,6 @@
             cargarClientes();
             cargarCompetidores();
             actualizarDashboard();
-            configurarDraggable();
         }
 
         function cargarClientes() {
@@ -1147,7 +800,7 @@
                 }).addTo(mapa);
 
                 marker.bindPopup(`
-                    <div style="min-width: 280px;">
+                    <div style="min-width: 250px;">
                         <strong>${cliente.empresa}</strong><br>
                         <strong>Contacto:</strong> ${cliente.nombre}<br>
                         <strong>Cargo:</strong> ${cliente.cargo}<br>
@@ -1156,10 +809,9 @@
                         <strong>Segmento:</strong> ${cliente.segmento}<br>
                         <strong>Volumen:</strong> ${cliente.volumen} ton/año<br>
                         <strong>Notas:</strong> ${cliente.notas}<br>
-                        <div style="margin-top: 15px; display: flex; gap: 5px;">
-                            <button onclick="abrirPopupCliente(${cliente.id})" style="background: #27ae60; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">📋 Ver Detalles</button>
-                            <button onclick="editarCliente(${cliente.id})" style="background: #f39c12; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">✏️ Editar</button>
-                            <button onclick="eliminarCliente(${cliente.id})" style="background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">🗑️ Eliminar</button>
+                        <div style="margin-top: 10px;">
+                            <button onclick="editarCliente(${cliente.id})" style="margin-right: 5px;">Editar</button>
+                            <button onclick="eliminarCliente(${cliente.id})" style="background: #e74c3c; color: white;">Eliminar</button>
                         </div>
                     </div>
                 `);
@@ -1205,210 +857,6 @@
             });
         }
 
-        function configurarDraggable() {
-            const popup = document.getElementById('cliente-popup');
-            const header = popup.querySelector('.modal-header');
-
-            header.addEventListener('mousedown', dragStart);
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', dragEnd);
-        }
-
-        function dragStart(e) {
-            const popup = document.getElementById('cliente-popup');
-            initialX = e.clientX - xOffset;
-            initialY = e.clientY - yOffset;
-
-            if (e.target === e.currentTarget) {
-                isDragging = true;
-                popup.style.cursor = 'grabbing';
-            }
-        }
-
-        function drag(e) {
-            if (isDragging) {
-                e.preventDefault();
-                const popup = document.getElementById('cliente-popup');
-
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
-
-                xOffset = currentX;
-                yOffset = currentY;
-
-                popup.style.transform = `translate(${currentX}px, ${currentY}px)`;
-            }
-        }
-
-        function dragEnd(e) {
-            const popup = document.getElementById('cliente-popup');
-            initialX = currentX;
-            initialY = currentY;
-
-            isDragging = false;
-            popup.style.cursor = 'default';
-        }
-
-        function abrirPopupCliente(id) {
-            const cliente = clientes.find(c => c.id === id);
-            if (!cliente) return;
-
-            clienteEditando = cliente;
-
-            // Llenar formulario
-            llenarFormulario(cliente);
-
-            // Llenar análisis
-            llenarAnalisis(cliente);
-
-            // Configurar popup
-            document.getElementById('popup-titulo').textContent = cliente.empresa;
-            document.getElementById('cliente-popup').style.display = 'block';
-
-            // Centrar popup
-            centrarPopup();
-
-            // Ir a tab información
-            cambiarTab('info');
-        }
-
-        function llenarFormulario(cliente) {
-            document.getElementById('nombre').value = cliente.nombre;
-            document.getElementById('cargo').value = cliente.cargo;
-            document.getElementById('empresa').value = cliente.empresa;
-            document.getElementById('email').value = cliente.email;
-            document.getElementById('telefono').value = cliente.telefono;
-            document.getElementById('direccion').value = cliente.direccion;
-            document.getElementById('latitud').value = cliente.lat;
-            document.getElementById('longitud').value = cliente.lng;
-            document.getElementById('segmento').value = cliente.segmento;
-            document.getElementById('volumen').value = cliente.volumen;
-            document.getElementById('notas').value = cliente.notas;
-        }
-
-        function llenarAnalisis(cliente) {
-            const analisis = datosAnalisis[cliente.id];
-
-            if (analisis) {
-                // Puntos de dolor
-                const puntosDolorList = document.getElementById('puntos-dolor');
-                puntosDolorList.innerHTML = '';
-                analisis.puntosDolor.forEach(punto => {
-                    const li = document.createElement('li');
-                    li.textContent = punto;
-                    puntosDolorList.appendChild(li);
-                });
-
-                // Propuesta de valor
-                const propuestaList = document.getElementById('propuesta-valor');
-                propuestaList.innerHTML = '';
-                analisis.propuestaNaturpellet.forEach(propuesta => {
-                    const li = document.createElement('li');
-                    li.textContent = propuesta;
-                    propuestaList.appendChild(li);
-                });
-
-                // Por qué Naturpellet
-                document.getElementById('porque-naturpellet').textContent = analisis.porqueNaturpellet;
-            }
-        }
-
-        function centrarPopup() {
-            const popup = document.getElementById('cliente-popup');
-            const rect = popup.getBoundingClientRect();
-
-            xOffset = (window.innerWidth - rect.width) / 2;
-            yOffset = (window.innerHeight - rect.height) / 2;
-
-            popup.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-        }
-
-        function cambiarTab(tabName) {
-            // Remover active de todos los tabs
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-            // Activar tab seleccionado
-            document.querySelector(`[onclick="cambiarTab('${tabName}')"]`).classList.add('active');
-            document.getElementById(`tab-${tabName}`).classList.add('active');
-        }
-
-        function minimizePopup() {
-            const popup = document.getElementById('cliente-popup');
-            popupMinimized = !popupMinimized;
-
-            if (popupMinimized) {
-                popup.classList.add('minimized');
-            } else {
-                popup.classList.remove('minimized');
-            }
-        }
-
-        function maximizePopup() {
-            const popup = document.getElementById('cliente-popup');
-            popupMaximized = !popupMaximized;
-
-            if (popupMaximized) {
-                popup.style.width = '95vw';
-                popup.style.height = '95vh';
-                popup.style.transform = 'translate(2.5vw, 2.5vh)';
-                xOffset = window.innerWidth * 0.025;
-                yOffset = window.innerHeight * 0.025;
-            } else {
-                popup.style.width = '';
-                popup.style.height = '';
-                centrarPopup();
-            }
-        }
-
-        function cerrarPopup() {
-            document.getElementById('cliente-popup').style.display = 'none';
-            popupMinimized = false;
-            popupMaximized = false;
-        }
-
-        function calcularAhorro() {
-            const combustible = document.getElementById('combustible-actual').value;
-            const costeActual = parseFloat(document.getElementById('coste-actual').value);
-            const superficie = parseFloat(document.getElementById('superficie-calc').value);
-
-            if (!combustible || !costeActual) return;
-
-            // Calcular kWh anuales
-            const kwhAnuales = costeActual / preciosCombustibles[combustible];
-            document.getElementById('consumo-kwh').value = Math.round(kwhAnuales);
-
-            // Calcular coste con pellets
-            const costePellets = kwhAnuales * preciosCombustibles.pellets;
-            const ahorroAnual = costeActual - costePellets;
-            const ahorroPorcentaje = (ahorroAnual / costeActual) * 100;
-
-            // Calcular toneladas pellets (4.8 kWh/kg)
-            const toneladasPellets = kwhAnuales / 4800;
-
-            // Estimar ROI (basado en superficie)
-            const inversionEstimada = superficie ? superficie * 100 : 50000; // 100€/m² promedio
-            const roiAnos = inversionEstimada / ahorroAnual;
-
-            // Mostrar resultados
-            document.getElementById('ahorro-anual').textContent = formatCurrency(ahorroAnual);
-            document.getElementById('ahorro-euros').textContent = formatCurrency(ahorroAnual);
-            document.getElementById('ahorro-porcentaje').textContent = Math.round(ahorroPorcentaje) + '%';
-            document.getElementById('toneladas-necesarias').textContent = Math.round(toneladasPellets) + ' ton/año';
-            document.getElementById('roi-anos').textContent = roiAnos.toFixed(1) + ' años';
-            document.getElementById('ahorro-10-anos').textContent = formatCurrency(ahorroAnual * 10);
-
-            document.getElementById('resultado-calculo').style.display = 'block';
-        }
-
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('es-ES', {
-                style: 'currency',
-                currency: 'EUR',
-                maximumFractionDigits: 0
-            }).format(amount);
-        }
-
         function getIconoSegmento(segmento) {
             const iconos = {
                 'Hotel Rural': '🏨',
@@ -1436,7 +884,6 @@
                 div.className = 'client-card';
                 div.innerHTML = `
                     <div class="client-actions">
-                        <button class="btn-small btn-view" onclick="abrirPopupCliente(${cliente.id})">👁️</button>
                         <button class="btn-small btn-edit" onclick="editarCliente(${cliente.id})">✏️</button>
                         <button class="btn-small btn-delete" onclick="eliminarCliente(${cliente.id})">🗑️</button>
                     </div>
@@ -1496,16 +943,29 @@
 
         function abrirModalAgregar() {
             clienteEditando = null;
-            document.getElementById('popup-titulo').textContent = 'Agregar Nuevo Cliente';
+            document.getElementById('modal-titulo').textContent = 'Agregar Nuevo Cliente';
             document.getElementById('cliente-form').reset();
-            document.getElementById('cliente-popup').style.display = 'block';
-            centrarPopup();
-            cambiarTab('info');
+            document.getElementById('cliente-modal').style.display = 'block';
         }
 
         function editarCliente(id) {
-            abrirPopupCliente(id);
-            cambiarTab('info');
+            clienteEditando = clientes.find(c => c.id === id);
+            document.getElementById('modal-titulo').textContent = 'Editar Cliente';
+
+            // Llenar formulario
+            document.getElementById('nombre').value = clienteEditando.nombre;
+            document.getElementById('cargo').value = clienteEditando.cargo;
+            document.getElementById('empresa').value = clienteEditando.empresa;
+            document.getElementById('email').value = clienteEditando.email;
+            document.getElementById('telefono').value = clienteEditando.telefono;
+            document.getElementById('direccion').value = clienteEditando.direccion;
+            document.getElementById('latitud').value = clienteEditando.lat;
+            document.getElementById('longitud').value = clienteEditando.lng;
+            document.getElementById('segmento').value = clienteEditando.segmento;
+            document.getElementById('volumen').value = clienteEditando.volumen;
+            document.getElementById('notas').value = clienteEditando.notas;
+
+            document.getElementById('cliente-modal').style.display = 'block';
         }
 
         function eliminarCliente(id) {
@@ -1513,8 +973,11 @@
                 clientes = clientes.filter(c => c.id !== id);
                 cargarClientes();
                 actualizarDashboard();
-                cerrarPopup();
             }
+        }
+
+        function cerrarModal() {
+            document.getElementById('cliente-modal').style.display = 'none';
         }
 
         // Manejar formulario
@@ -1546,7 +1009,7 @@
 
             cargarClientes();
             actualizarDashboard();
-            cerrarPopup();
+            cerrarModal();
         });
 
         function exportarPDF() {
@@ -1594,7 +1057,7 @@
                 y += 10;
             });
 
-            doc.save('naturpellet-informe-expansion.pdf');
+            doc.save('naturpellet-clientes-expansion.pdf');
         }
 
         function exportarCSV() {
@@ -1636,12 +1099,13 @@
             inicializarMapa();
         });
 
-        // Cerrar popup con ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                cerrarPopup();
+        // Cerrar modal al hacer click fuera
+        window.onclick = function(event) {
+            const modal = document.getElementById('cliente-modal');
+            if (event.target === modal) {
+                cerrarModal();
             }
-        });
+        }
     </script>
 </body>
 </html>
