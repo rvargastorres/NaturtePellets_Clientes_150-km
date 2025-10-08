@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- SUPABASE JS LIBRARY -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        /* Estilos CSS copiados de tu PDF */
         * {
             margin: 0;
             padding: 0;
@@ -27,7 +27,7 @@
             background: linear-gradient(135deg, #5a4a3a 0%, #6b4d32 100%);
             color: white;
             padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .header-content {
@@ -263,7 +263,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0,0,0,0.5);
         }
 
         .modal-content {
@@ -273,6 +273,8 @@
             border-radius: 12px;
             width: 80%;
             max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .close {
@@ -295,11 +297,6 @@
 
         .form-group {
             margin-bottom: 15px;
-        }
-        
-        /* Ajuste para que el input de notas tome todo el ancho */
-        .form-group.full-width {
-            grid-column: 1 / -1; 
         }
 
         .form-group label {
@@ -351,6 +348,13 @@
         .marker-competidor { background: #e74c3c; }
         .marker-zona150 { background: transparent; border: 2px dashed #e74c3c; }
 
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #6b4d32;
+            font-weight: bold;
+        }
+
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -364,32 +368,13 @@
                 grid-template-columns: 1fr;
             }
         }
-
-        .export-section {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(90, 74, 58, 0.1);
-        }
-
-        .export-section h3 {
-            color: #5a4a3a;
-            margin-bottom: 15px;
-        }
-
-        .export-options {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="header-content">
             <div class="logo-section">
-                <div class="logo"></div>
+                <div class="logo">🐿️</div>
                 <div class="company-info">
                     <h1>NATURPELLET</h1>
                     <p>Pellet 100% Natural y Ecológico | Sanchonuño, Segovia</p>
@@ -398,12 +383,13 @@
             <div class="report-date">
                 <h3>Informe Ejecutivo</h3>
                 <p>Plan Expansión 2025</p>
-                <p>7 Octubre 2025</p>
+                <p>8 Octubre 2025</p>
             </div>
         </div>
     </header>
 
     <div class="container">
+        <!-- Dashboard -->
         <div class="dashboard-grid">
             <div class="dashboard-card">
                 <h3 id="total-clientes">0</h3>
@@ -414,7 +400,7 @@
                 <p>Toneladas/Año Potencial</p>
             </div>
             <div class="dashboard-card">
-                <h3 id="ingresos-potencial">0M€</h3>
+                <h3 id="ingresos-potencial">0.00M€</h3>
                 <p>Ingresos Potenciales</p>
             </div>
             <div class="dashboard-card">
@@ -423,9 +409,10 @@
             </div>
         </div>
 
+        <!-- Contenido Principal -->
         <div class="main-content">
             <div class="map-section">
-                <h2> Mapa Estratégico de Expansión</h2>
+                <h2>📍 Mapa Estratégico de Expansión</h2>
                 <div id="map"></div>
                 <div class="legend">
                     <h4>Leyenda</h4>
@@ -449,7 +436,8 @@
             </div>
 
             <div class="controls-section">
-                <h3> Controles</h3>
+                <h3>⚙️ Controles</h3>
+
                 <div class="control-group">
                     <label for="filter-segmento">Filtrar por Segmento</label>
                     <select id="filter-segmento" onchange="filtrarMapa()">
@@ -461,7 +449,7 @@
                         <option value="Empresa ESE">ESE</option>
                         <option value="Residencia/Centro">Residencias</option>
                         <option value="Centro educativo">Educativo</option>
-                        <option value="Clinica/Sanitario">Sanitario</option>
+                        <option value="Clínica/Sanitario">Sanitario</option>
                     </select>
                 </div>
 
@@ -476,13 +464,17 @@
                 <div class="control-group">
                     <label for="mostrar-zonas">Mostrar Zonas 150km</label>
                     <select id="mostrar-zonas" onchange="toggleZonas150()">
-                        <option value="true">Si</option>
+                        <option value="true">Sí</option>
                         <option value="false">No</option>
                     </select>
                 </div>
 
                 <button class="btn-primary" onclick="abrirModalAgregar()">
                     ➕ Agregar Cliente
+                </button>
+
+                <button class="btn-secondary" onclick="sincronizarConSupabase()">
+                    🔄 Sincronizar Base Datos
                 </button>
 
                 <button class="btn-secondary" onclick="exportarPDF()">
@@ -495,46 +487,41 @@
             </div>
         </div>
 
+        <!-- Lista de Clientes -->
         <div class="clients-list">
             <h2>👥 Clientes Potenciales Identificados</h2>
-            <div id="clientes-container">
-                </div>
+            <div class="loading" id="loading-indicator">Cargando datos desde Supabase...</div>
+            <div id="clientes-container"></div>
         </div>
     </div>
 
+    <!-- Modal Agregar/Editar Cliente -->
     <div id="cliente-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="cerrarModal()">&times;</span>
             <h2 id="modal-titulo">Agregar Nuevo Cliente</h2>
-            
             <form id="cliente-form">
                 <div class="form-grid">
-                    
                     <div class="form-group">
                         <label for="nombre">Nombre Contacto</label>
                         <input type="text" id="nombre" required>
                     </div>
-
                     <div class="form-group">
                         <label for="cargo">Cargo</label>
                         <input type="text" id="cargo">
                     </div>
-
                     <div class="form-group">
                         <label for="empresa">Empresa</label>
                         <input type="text" id="empresa" required>
                     </div>
-
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email">
                     </div>
-
                     <div class="form-group">
                         <label for="telefono">Teléfono</label>
                         <input type="tel" id="telefono">
                     </div>
-
                     <div class="form-group">
                         <label for="segmento">Segmento</label>
                         <select id="segmento" required>
@@ -549,57 +536,49 @@
                             <option value="Clínica/Sanitario">Clínica/Sanitario</option>
                         </select>
                     </div>
-
-                    <div class="form-group full-width">
-                        <label for="direccion">Dirección Completa</label>
-                        <input type="text" id="direccion" required>
-                    </div>
-
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" id="direccion" required>
+                </div>
+                <div class="form-grid">
                     <div class="form-group">
                         <label for="latitud">Latitud</label>
-                        <input type="number" step="0.000001" id="latitud" required>
+                        <input type="number" id="latitud" step="any" placeholder="Ej: 40.4168">
                     </div>
-
                     <div class="form-group">
                         <label for="longitud">Longitud</label>
-                        <input type="number" step="0.000001" id="longitud" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="volumen">Volumen Potencial (ton/año)</label>
-                        <input type="number" id="volumen" required>
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label for="notas">Notas</label>
-                        <textarea id="notas" rows="3"></textarea>
+                        <input type="number" id="longitud" step="any" placeholder="Ej: -3.7038">
                     </div>
                 </div>
-
-                <button type="submit" class="btn-primary">Guardar Cliente</button>
+                <div class="form-group">
+                    <label for="volumen">Volumen Potencial (ton/año)</label>
+                    <input type="number" id="volumen" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="notas">Notas</label>
+                    <textarea id="notas" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn-primary">💾 Guardar Cliente</button>
             </form>
         </div>
     </div>
-    
+
     <script>
         // ====================================================================
-        // 🟢 PASO 2: CREDENCIALES Y CLIENTE SUPABASE INTEGRADO
+        // INICIALIZACIÓN DE SUPABASE
         // ====================================================================
-
-        // URL del Proyecto (naaatgzpzfgzplqlszew)
-        const SUPABASE_URL = 'https://naaatgzpzfgzplqlszew.supabase.co'; 
-        // Clave Pública ANÓNIMA
+        const SUPABASE_URL = 'https://naaatgzpzfgzplqlszew.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hYWF0Z3pwemZnenBscWxzemV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MDk5NjYsImV4cCI6MjA3NTQ4NTk2Nn0.C1V7UyNxBYQyb904chvYHwRtYN6CVY_si26rHaSm3D4';
 
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ====================================================================
-        // DATOS Y VARIABLES GLOBALES (MODIFICADO)
+        // VARIABLES GLOBALES
         // ====================================================================
-        
-        const naturpellet = { 
-            lat: 41.2500, 
-            lng: -4.3833, 
+        const naturpellet = {
+            lat: 41.2951,
+            lng: -4.3838,
             nombre: "Naturpellet",
             direccion: "Salida 60, A-601, 40297 Sanchonuño, Segovia"
         };
@@ -612,209 +591,293 @@
             { nombre: "Astillastur", lat: 43.3614, lng: -5.8593, ciudad: "Oviedo, Asturias", capacidad: "N/D" }
         ];
 
-        // Se inicializa vacío. Los datos se cargarán desde Supabase.
-        let clientes = []; 
-        let mapa; 
-        let markersClientes = []; 
-        let markersCompetidores = []; 
-        let circulosCompetencia = []; 
+        let mapa;
+        let markersClientes = [];
+        let markersCompetidores = [];
+        let circulosCompetencia = [];
         let clienteEditando = null;
+        let clientes = [];
 
         // ====================================================================
-        // FUNCIONES DE INTERACCIÓN CON SUPABASE (NUEVAS Y MODIFICADAS)
+        // FUNCIONES SUPABASE
         // ====================================================================
 
-        /**
-         * Carga todos los clientes de la tabla 'clientes_potenciales' de Supabase.
-         * Actualiza el array global 'clientes' y refresca la UI.
-         */
-        async function cargarClientes() {
-            // 1. Fetch data from Supabase
-            const { data, error } = await supabase
-                .from('clientes_potenciales')
-                .select('*')
-                .order('id', { ascending: false }); 
+        async function cargarClientesDesdeSupabase() {
+            try {
+                document.getElementById('loading-indicator').style.display = 'block';
 
-            if (error) {
-                console.error('Error al cargar clientes de Supabase:', error);
-                alert('Error al cargar la lista de clientes. Por favor, revisa la conexión y las políticas RLS. Por favor y gracias.');
-                return;
+                const { data, error } = await supabase
+                    .from('clientes_potenciales')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    console.error('Error al cargar clientes:', error);
+                    alert('Error al cargar clientes desde Supabase. Revisa la consola.');
+                    return;
+                }
+
+                clientes = data.map(cliente => ({
+                    id: cliente.id,
+                    nombre: cliente.contacto_nombre || '',
+                    cargo: cliente.contacto_cargo || '',
+                    empresa: cliente.nombre_empresa || '',
+                    email: cliente.contacto_email || '',
+                    telefono: cliente.contacto_telefono || '',
+                    direccion: cliente.direccion || '',
+                    lat: parseFloat(cliente.latitud) || 40.0,
+                    lng: parseFloat(cliente.longitud) || -4.0,
+                    segmento: cliente.segmento || '',
+                    volumen: parseInt(cliente.volumen_potencial) || 0,
+                    notas: cliente.notas || ''
+                }));
+
+                document.getElementById('loading-indicator').style.display = 'none';
+
+                cargarClientes();
+                actualizarDashboard();
+
+                console.log(`✅ ${clientes.length} clientes cargados desde Supabase`);
+
+            } catch (err) {
+                console.error('Error inesperado:', err);
+                document.getElementById('loading-indicator').innerText = 'Error al cargar datos. Verifica la configuración.';
             }
-            
-            // 2. Actualizar el array global con los datos de Supabase
-            clientes = data || []; 
-
-            // 3. Aplicar filtros, redibujar el mapa y la lista
-            filtrarMapa(); 
-            actualizarDashboard(); 
         }
 
-        /**
-         * Inserta o actualiza un cliente en Supabase.
-         * @param {object} formData - Datos del formulario.
-         * @returns {boolean} - Indica si el guardado fue exitoso.
-         */
-        async function manejarGuardadoCliente(formData) {
-            let result;
-            
-            // Mapeo de datos del formulario a la estructura de la tabla (usando latitud/longitud como nombres de columna)
-            const clienteData = {
-                nombre: formData.nombre,
-                cargo: formData.cargo,
-                empresa: formData.empresa,
-                email: formData.email,
-                telefono: formData.telefono,
-                direccion: formData.direccion,
-                latitud: parseFloat(formData.lat),
-                longitud: parseFloat(formData.lng),
-                segmento: formData.segmento,
-                volumen: parseInt(formData.volumen),
-                notas: formData.notas
-            };
+        async function guardarClienteEnSupabase(datosCliente) {
+            try {
+                const clienteSupabase = {
+                    nombre_empresa: datosCliente.empresa,
+                    contacto_nombre: datosCliente.nombre,
+                    contacto_cargo: datosCliente.cargo,
+                    contacto_email: datosCliente.email,
+                    contacto_telefono: datosCliente.telefono,
+                    segmento: datosCliente.segmento,
+                    direccion: datosCliente.direccion,
+                    latitud: parseFloat(datosCliente.lat),
+                    longitud: parseFloat(datosCliente.lng),
+                    volumen_potencial: parseInt(datosCliente.volumen),
+                    notas: datosCliente.notas
+                };
 
-            if (clienteEditando) {
-                // Lógica de EDICIÓN
-                result = await supabase
+                const { data, error } = await supabase
                     .from('clientes_potenciales')
-                    .update(clienteData)
-                    .eq('id', clienteEditando.id);
-            } else {
-                // Lógica de INSERCIÓN
-                result = await supabase
-                    .from('clientes_potenciales')
-                    .insert([clienteData])
-                    .select(); 
+                    .insert([clienteSupabase])
+                    .select();
+
+                if (error) {
+                    console.error('Error al guardar:', error);
+                    alert('Error al guardar cliente en Supabase: ' + error.message);
+                    return null;
+                }
+
+                alert('✅ Cliente guardado exitosamente en Supabase');
+                return data[0];
+
+            } catch (err) {
+                console.error('Error inesperado al guardar:', err);
+                alert('Error inesperado al guardar cliente');
+                return null;
             }
+        }
 
-            if (result.error) {
-                console.error('Error de Supabase al guardar:', result.error);
-                alert(`Error al guardar el cliente: ${result.error.message}. Asegúrate de que las políticas RLS (INSERT/UPDATE para rol 'anon') están activadas. Por favor.`);
-                return false;
-            } else {
-                alert(clienteEditando ? 'Cliente actualizado exitosamente, gracias.' : 'Nuevo cliente guardado exitosamente, gracias.');
+        async function actualizarClienteEnSupabase(id, datosCliente) {
+            try {
+                const clienteSupabase = {
+                    nombre_empresa: datosCliente.empresa,
+                    contacto_nombre: datosCliente.nombre,
+                    contacto_cargo: datosCliente.cargo,
+                    contacto_email: datosCliente.email,
+                    contacto_telefono: datosCliente.telefono,
+                    segmento: datosCliente.segmento,
+                    direccion: datosCliente.direccion,
+                    latitud: parseFloat(datosCliente.lat),
+                    longitud: parseFloat(datosCliente.lng),
+                    volumen_potencial: parseInt(datosCliente.volumen),
+                    notas: datosCliente.notas
+                };
+
+                const { data, error } = await supabase
+                    .from('clientes_potenciales')
+                    .update(clienteSupabase)
+                    .eq('id', id)
+                    .select();
+
+                if (error) {
+                    console.error('Error al actualizar:', error);
+                    alert('Error al actualizar cliente: ' + error.message);
+                    return false;
+                }
+
+                alert('✅ Cliente actualizado exitosamente');
                 return true;
+
+            } catch (err) {
+                console.error('Error inesperado al actualizar:', err);
+                return false;
             }
         }
-        
-        /**
-         * Elimina un cliente de Supabase.
-         */
-        async function eliminarCliente(id) {
-            if (confirm('¿Está seguro de eliminar este cliente? ESTA ACCIÓN ES PERMANENTE. Por favor y gracias.')) {
+
+        async function eliminarClienteDeSupabase(id) {
+            try {
                 const { error } = await supabase
                     .from('clientes_potenciales')
                     .delete()
                     .eq('id', id);
 
                 if (error) {
-                    console.error('Error al eliminar en Supabase:', error);
-                    alert(`Error al eliminar: ${error.message}. Asegúrate de que la política RLS (DELETE para rol 'anon') está activada. Por favor.`);
-                } else {
-                    alert('Cliente eliminado exitosamente, gracias.');
-                    await cargarClientes(); // Recargar datos y UI
+                    console.error('Error al eliminar:', error);
+                    alert('Error al eliminar cliente: ' + error.message);
+                    return false;
                 }
+
+                alert('✅ Cliente eliminado de Supabase');
+                return true;
+
+            } catch (err) {
+                console.error('Error inesperado al eliminar:', err);
+                return false;
             }
         }
 
+        async function sincronizarConSupabase() {
+            await cargarClientesDesdeSupabase();
+        }
+
         // ====================================================================
-        // FUNCIONES DE UI/MAPA (ADAPTADAS)
+        // FUNCIONES MAPA
         // ====================================================================
 
         function inicializarMapa() {
             mapa = L.map('map').setView([40.0, -4.0], 6);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(mapa);
-            
-            // Añadir marcador de Naturpellet
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(mapa);
+
             L.marker([naturpellet.lat, naturpellet.lng], {
-                icon: L.divIcon({ html: '🏭', iconSize: [25, 25], className: 'marker-naturpellet' })
-            }).addTo(mapa).bindPopup(`<strong>${naturpellet.nombre}</strong><br>${naturpellet.direccion}`);
+                icon: L.divIcon({
+                    html: '🐿️',
+                    iconSize: [30, 30],
+                    className: 'marker-naturpellet'
+                })
+            }).addTo(mapa).bindPopup(`
+                <strong>🐿️ NATURPELLET</strong><br>
+                ${naturpellet.direccion}<br>
+                <em>Planta Principal</em>
+            `);
 
             cargarCompetidores();
-            // ⚡ Llamada inicial a cargar clientes desde Supabase ⚡
-            cargarClientes(); 
+            cargarClientesDesdeSupabase();
+        }
+
+        function cargarClientes() {
+            markersClientes.forEach(marker => mapa.removeLayer(marker));
+            markersClientes = [];
+
+            const segmentoFiltro = document.getElementById('filter-segmento').value;
+            const clientesFiltrados = segmentoFiltro 
+                ? clientes.filter(c => c.segmento === segmentoFiltro)
+                : clientes;
+
+            clientesFiltrados.forEach(cliente => {
+                const marker = L.marker([cliente.lat, cliente.lng], {
+                    icon: L.divIcon({
+                        html: getIconoSegmento(cliente.segmento),
+                        iconSize: [25, 25],
+                        className: 'marker-cliente'
+                    })
+                }).addTo(mapa);
+
+                marker.bindPopup(`
+                    <div style="min-width: 250px;">
+                        <strong>${cliente.empresa}</strong><br>
+                        <strong>Contacto:</strong> ${cliente.nombre}<br>
+                        <strong>Cargo:</strong> ${cliente.cargo}<br>
+                        <strong>Email:</strong> ${cliente.email}<br>
+                        <strong>Teléfono:</strong> ${cliente.telefono}<br>
+                        <strong>Segmento:</strong> ${cliente.segmento}<br>
+                        <strong>Volumen:</strong> ${cliente.volumen} ton/año<br>
+                        <strong>Notas:</strong> ${cliente.notas}<br>
+                        <div style="margin-top: 10px;">
+                            <button onclick="editarCliente('${cliente.id}')" style="margin-right: 5px; padding: 5px 10px; background: #f39c12; color: white; border: none; border-radius: 4px; cursor: pointer;">Editar</button>
+                            <button onclick="eliminarCliente('${cliente.id}')" style="padding: 5px 10px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">Eliminar</button>
+                        </div>
+                    </div>
+                `);
+
+                markersClientes.push(marker);
+            });
+
+            renderizarListaClientes();
         }
 
         function cargarCompetidores() {
             markersCompetidores.forEach(marker => mapa.removeLayer(marker));
-            markersCompetidores = [];
             circulosCompetencia.forEach(circle => mapa.removeLayer(circle));
+            markersCompetidores = [];
             circulosCompetencia = [];
 
             competidores.forEach(comp => {
                 const marker = L.marker([comp.lat, comp.lng], {
-                    icon: L.divIcon({ html: '🏭', iconSize: [25, 25], className: 'marker-competidor' })
+                    icon: L.divIcon({
+                        html: '🏭',
+                        iconSize: [25, 25],
+                        className: 'marker-competidor'
+                    })
                 }).addTo(mapa);
-                
+
                 marker.bindPopup(`
                     <strong>🏭 ${comp.nombre}</strong><br>
                     ${comp.ciudad}<br>
-                    <strong>Capacidad:</strong> ${comp.capacidad} 
+                    <strong>Capacidad:</strong> ${comp.capacidad}
                 `);
 
-                const circle = L.circle([comp.lat, comp.lng], { 
-                    color: '#e74c3c', 
-                    fillColor: '#e74c3c', 
-                    fillOpacity: 0.1, 
-                    radius: 150000, 
-                    dashArray: '10, 10' 
+                const circle = L.circle([comp.lat, comp.lng], {
+                    color: '#e74c3c',
+                    fillColor: '#e74c3c',
+                    fillOpacity: 0.1,
+                    radius: 150000,
+                    dashArray: '10, 10'
                 }).addTo(mapa);
 
                 markersCompetidores.push(marker);
                 circulosCompetencia.push(circle);
             });
         }
-        
-        /**
-         * Filtra el array global 'clientes' y redibuja mapa y lista.
-         */
-        function filtrarMapa() {
-            const segmento = document.getElementById('filter-segmento').value;
-            // Filtra los clientes que están actualmente en la variable global 'clientes'
-            const clientesFiltrados = clientes.filter(c => !segmento || c.segmento === segmento);
 
-            // 1. Redibujar Marcadores de Mapa (Clientes)
-            markersClientes.forEach(marker => mapa.removeLayer(marker));
-            markersClientes = [];
-
-            clientesFiltrados.forEach(cliente => {
-                // Se usan 'latitud' y 'longitud' (nombres de columna de Supabase)
-                if (cliente.latitud && cliente.longitud) {
-                    const marker = L.marker([cliente.latitud, cliente.longitud], { 
-                        icon: L.divIcon({ 
-                            html: getIconoSegmento(cliente.segmento), 
-                            iconSize: [25, 25], 
-                            className: 'marker-cliente' 
-                        }) 
-                    }).addTo(mapa);
-                    
-                    marker.bindPopup(`
-                        <div style="min-width: 250px;">
-                            <strong>${cliente.empresa}</strong><br>
-                            <strong>Contacto:</strong> ${cliente.nombre}<br>
-                            <strong>Cargo:</strong> ${cliente.cargo}<br>
-                            <strong>Segmento:</strong> ${cliente.segmento}<br>
-                            <strong>Volumen:</strong> ${cliente.volumen} ton/año<br>
-                        </div>
-                    `);
-                    markersClientes.push(marker);
-                }
-            });
-
-            // 2. Actualizar la Lista de Clientes en el sidebar
-            actualizarListaClientes(clientesFiltrados); 
+        function getIconoSegmento(segmento) {
+            const iconos = {
+                'Hotel Rural': '🏨',
+                'Industria Agroalimentaria': '🍷',
+                'Ayuntamiento': '🏛️',
+                'Polígono Industrial': '🏭',
+                'Empresa ESE': '⚡',
+                'Residencia/Centro': '🏥',
+                'Centro educativo': '🎓',
+                'Clínica/Sanitario': '🏥'
+            };
+            return iconos[segmento] || '📍';
         }
 
-        function actualizarListaClientes(clientesACargar) {
+        function renderizarListaClientes() {
             const container = document.getElementById('clientes-container');
+            const segmentoFiltro = document.getElementById('filter-segmento').value;
+
+            const clientesFiltrados = segmentoFiltro 
+                ? clientes.filter(c => c.segmento === segmentoFiltro)
+                : clientes;
+
             container.innerHTML = '';
-            
-            clientesACargar.forEach(cliente => {
+
+            clientesFiltrados.forEach(cliente => {
                 const div = document.createElement('div');
                 div.className = 'client-card';
                 div.innerHTML = `
                     <div class="client-actions">
-                        <button class="btn-small btn-edit" onclick="editarCliente(${cliente.id})">✏️</button>
-                        <button class="btn-small btn-delete" onclick="eliminarCliente(${cliente.id})">❌</button>
+                        <button class="btn-small btn-edit" onclick="editarCliente('${cliente.id}')">✏️</button>
+                        <button class="btn-small btn-delete" onclick="eliminarCliente('${cliente.id}')">🗑️</button>
                     </div>
                     <h4>${getIconoSegmento(cliente.segmento)} ${cliente.empresa}</h4>
                     <div class="client-info">
@@ -822,97 +885,102 @@
                         <div><strong>Cargo:</strong> ${cliente.cargo}</div>
                         <div><strong>Email:</strong> ${cliente.email}</div>
                         <div><strong>Teléfono:</strong> ${cliente.telefono}</div>
-                        <div><strong>Segmento:</strong> ${cliente.segmento}</div>
                         <div><strong>Volumen:</strong> ${cliente.volumen} ton/año</div>
-                        <div><strong>Dirección:</strong> ${cliente.direccion}</div>
-                        <div><strong>Notas:</strong> ${cliente.notas || 'N/D'}</div>
+                        <div><strong>Segmento:</strong> ${cliente.segmento}</div>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <strong>Dirección:</strong> ${cliente.direccion}<br>
+                        <strong>Notas:</strong> ${cliente.notas}
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
-        
+
         function actualizarDashboard() {
             const totalClientes = clientes.length;
-            const volumenTotal = clientes.reduce((sum, c) => sum + (c.volumen || 0), 0);
-            // Asumiendo 300€/tonelada como valor de referencia
-            const ingresosPotencial = (volumenTotal * 300 / 1000000).toFixed(2); 
+            const volumenTotal = clientes.reduce((sum, c) => sum + c.volumen, 0);
+            const ingresosTotal = volumenTotal * 300;
 
             document.getElementById('total-clientes').textContent = totalClientes;
             document.getElementById('volumen-total').textContent = volumenTotal.toLocaleString();
-            document.getElementById('ingresos-potencial').textContent = `${ingresosPotencial}M€`;
-            document.getElementById('competidores').textContent = competidores.length;
+            document.getElementById('ingresos-potencial').textContent = (ingresosTotal / 1000000).toFixed(2) + 'M€';
         }
 
-        function getIconoSegmento(segmento) {
-            const iconos = { 
-                'Hotel Rural': '🏨', 
-                'Industria Agroalimentaria': '🏭', 
-                'Ayuntamiento': '🏛️', 
-                'Polígono Industrial': '🧱', 
-                'Empresa ESE': '💡', 
-                'Residencia/Centro': '🏥', 
-                'Centro educativo': '🏫', 
-                'Clínica/Sanitario': '⚕️',
-                'default': '📍'
-            };
-            return iconos[segmento] || iconos['default'];
+        function filtrarMapa() {
+            cargarClientes();
         }
 
         function toggleCompetidores() {
             const mostrar = document.getElementById('mostrar-competidores').value === 'true';
-            markersCompetidores.forEach(marker => { 
-                if (mostrar) { marker.addTo(mapa); } else { mapa.removeLayer(marker); } 
+            markersCompetidores.forEach(marker => {
+                if (mostrar) {
+                    marker.addTo(mapa);
+                } else {
+                    mapa.removeLayer(marker);
+                }
             });
         }
 
         function toggleZonas150() {
             const mostrar = document.getElementById('mostrar-zonas').value === 'true';
-            circulosCompetencia.forEach(circle => { 
-                if (mostrar) { circle.addTo(mapa); } else { mapa.removeLayer(circle); } 
+            circulosCompetencia.forEach(circle => {
+                if (mostrar) {
+                    circle.addTo(mapa);
+                } else {
+                    mapa.removeLayer(circle);
+                }
             });
         }
 
+        // ====================================================================
+        // FUNCIONES MODAL Y FORMULARIO
+        // ====================================================================
+
         function abrirModalAgregar() {
             clienteEditando = null;
-            document.getElementById('modal-titulo').textContent = '➕ Agregar Nuevo Cliente';
+            document.getElementById('modal-titulo').textContent = 'Agregar Nuevo Cliente';
             document.getElementById('cliente-form').reset();
             document.getElementById('cliente-modal').style.display = 'block';
         }
 
         function editarCliente(id) {
-            // Busca el cliente en el array global (actualizado por Supabase)
-            clienteEditando = clientes.find(c => c.id === id);
-            if (clienteEditando) {
-                document.getElementById('modal-titulo').textContent = `✏️ Editar Cliente #${id}`;
-                // Llenar el formulario con los datos del cliente (usando los nombres de columna de Supabase)
-                document.getElementById('nombre').value = clienteEditando.nombre || '';
-                document.getElementById('cargo').value = clienteEditando.cargo || '';
-                document.getElementById('empresa').value = clienteEditando.empresa || '';
-                document.getElementById('email').value = clienteEditando.email || '';
-                document.getElementById('telefono').value = clienteEditando.telefono || '';
-                document.getElementById('direccion').value = clienteEditando.direccion || '';
-                document.getElementById('latitud').value = clienteEditando.latitud || '';
-                document.getElementById('longitud').value = clienteEditando.longitud || '';
-                document.getElementById('segmento').value = clienteEditando.segmento || '';
-                document.getElementById('volumen').value = clienteEditando.volumen || '';
-                document.getElementById('notas').value = clienteEditando.notas || '';
-                
-                document.getElementById('cliente-modal').style.display = 'block';
+            clienteEditando = clientes.find(c => c.id == id);
+            if (!clienteEditando) return;
+
+            document.getElementById('modal-titulo').textContent = 'Editar Cliente';
+
+            document.getElementById('nombre').value = clienteEditando.nombre;
+            document.getElementById('cargo').value = clienteEditando.cargo;
+            document.getElementById('empresa').value = clienteEditando.empresa;
+            document.getElementById('email').value = clienteEditando.email;
+            document.getElementById('telefono').value = clienteEditando.telefono;
+            document.getElementById('direccion').value = clienteEditando.direccion;
+            document.getElementById('latitud').value = clienteEditando.lat;
+            document.getElementById('longitud').value = clienteEditando.lng;
+            document.getElementById('segmento').value = clienteEditando.segmento;
+            document.getElementById('volumen').value = clienteEditando.volumen;
+            document.getElementById('notas').value = clienteEditando.notas;
+
+            document.getElementById('cliente-modal').style.display = 'block';
+        }
+
+        async function eliminarCliente(id) {
+            if (!confirm('¿Está seguro de eliminar este cliente?')) return;
+
+            const eliminado = await eliminarClienteDeSupabase(id);
+            if (eliminado) {
+                await cargarClientesDesdeSupabase();
             }
         }
 
         function cerrarModal() {
             document.getElementById('cliente-modal').style.display = 'none';
-            document.getElementById('cliente-form').reset();
-            clienteEditando = null;
         }
 
-        // ⚡ MODIFICADO: Manejador del formulario para usar la función asíncrona de Supabase ⚡
         document.getElementById('cliente-form').addEventListener('submit', async function(e) {
-            e.preventDefault(); 
-            
-            // Recopilar datos del formulario
+            e.preventDefault();
+
             const formData = {
                 nombre: document.getElementById('nombre').value,
                 cargo: document.getElementById('cargo').value,
@@ -920,33 +988,125 @@
                 email: document.getElementById('email').value,
                 telefono: document.getElementById('telefono').value,
                 direccion: document.getElementById('direccion').value,
-                lat: document.getElementById('latitud').value, 
-                lng: document.getElementById('longitud').value, 
+                lat: parseFloat(document.getElementById('latitud').value) || 40.0,
+                lng: parseFloat(document.getElementById('longitud').value) || -4.0,
                 segmento: document.getElementById('segmento').value,
-                volumen: document.getElementById('volumen').value,
+                volumen: parseInt(document.getElementById('volumen').value) || 0,
                 notas: document.getElementById('notas').value
             };
 
-            // Llamar a la función de guardado en Supabase
-            const exito = await manejarGuardadoCliente(formData);
-            
-            if (exito) {
-                await cargarClientes(); // Recargar datos y UI después de guardar
-                cerrarModal(); 
+            if (clienteEditando) {
+                const actualizado = await actualizarClienteEnSupabase(clienteEditando.id, formData);
+                if (actualizado) {
+                    await cargarClientesDesdeSupabase();
+                }
+            } else {
+                const guardado = await guardarClienteEnSupabase(formData);
+                if (guardado) {
+                    await cargarClientesDesdeSupabase();
+                }
             }
+
+            cerrarModal();
         });
 
-        // Funciones de Exportación (Mantienen la lógica original usando el array 'clientes')
+        // ====================================================================
+        // FUNCIONES EXPORTACIÓN
+        // ====================================================================
+
         function exportarPDF() {
-            // Lógica de exportación a PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(20);
+            doc.text('NATURPELLET - Informe Ejecutivo Expansión', 20, 20);
+
+            doc.setFontSize(12);
+            doc.text('Plan de Expansión Comercial 2025', 20, 30);
+            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES'), 20, 40);
+
+            doc.setFontSize(14);
+            doc.text('Resumen Ejecutivo:', 20, 55);
+            doc.setFontSize(10);
+            doc.text(`Total Clientes Potenciales: ${clientes.length}`, 20, 65);
+            doc.text(`Volumen Total: ${clientes.reduce((sum, c) => sum + c.volumen, 0).toLocaleString()} ton/año`, 20, 75);
+            doc.text(`Ingresos Potenciales: ${(clientes.reduce((sum, c) => sum + c.volumen, 0) * 300 / 1000000).toFixed(2)}M€`, 20, 85);
+
+            let y = 100;
+            doc.setFontSize(12);
+            doc.text('Clientes Identificados:', 20, y);
+            y += 10;
+
+            doc.setFontSize(8);
+            clientes.forEach((cliente, index) => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                doc.text(`${index + 1}. ${cliente.empresa}`, 20, y);
+                y += 8;
+                doc.text(`   Contacto: ${cliente.nombre} (${cliente.cargo})`, 20, y);
+                y += 6;
+                doc.text(`   Email: ${cliente.email} | Tel: ${cliente.telefono}`, 20, y);
+                y += 6;
+                doc.text(`   Segmento: ${cliente.segmento} | Volumen: ${cliente.volumen} ton/año`, 20, y);
+                y += 6;
+                doc.text(`   Dirección: ${cliente.direccion}`, 20, y);
+                y += 10;
+            });
+
+            doc.save('naturpellet-clientes-supabase.pdf');
         }
 
         function exportarCSV() {
-            // Lógica de exportación a CSV
+            const headers = ['ID', 'Nombre', 'Cargo', 'Empresa', 'Email', 'Teléfono', 'Dirección', 'Segmento', 'Volumen (ton/año)', 'Latitud', 'Longitud', 'Notas'];
+
+            let csv = headers.join(',') + '\n';
+
+            clientes.forEach(cliente => {
+                const row = [
+                    cliente.id,
+                    `"${cliente.nombre}"`,
+                    `"${cliente.cargo}"`,
+                    `"${cliente.empresa}"`,
+                    cliente.email,
+                    cliente.telefono,
+                    `"${cliente.direccion}"`,
+                    `"${cliente.segmento}"`,
+                    cliente.volumen,
+                    cliente.lat,
+                    cliente.lng,
+                    `"${cliente.notas}"`
+                ];
+                csv += row.join(',') + '\n';
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'naturpellet-clientes-supabase.csv');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
-        // Inicialización
-        window.onload = inicializarMapa;
+        // ====================================================================
+        // INICIALIZACIÓN
+        // ====================================================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            inicializarMapa();
+        });
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('cliente-modal');
+            if (event.target === modal) {
+                cerrarModal();
+            }
+        }
     </script>
 </body>
 </html>
