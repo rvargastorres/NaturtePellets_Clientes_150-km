@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -392,7 +391,7 @@
             <div class="report-date">
                 <h3>Informe Ejecutivo</h3>
                 <p>Plan Expansión 2025</p>
-                <p>6 Octubre 2025</p>
+                <p>7 Octubre 2025</p>
             </div>
         </div>
     </header>
@@ -401,15 +400,15 @@
         <!-- Dashboard -->
         <div class="dashboard-grid">
             <div class="dashboard-card">
-                <h3 id="total-clientes">12</h3>
+                <h3 id="total-clientes">27</h3>
                 <p>Clientes Potenciales</p>
             </div>
             <div class="dashboard-card">
-                <h3 id="volumen-total">3,490</h3>
+                <h3 id="volumen-total">5,330</h3>
                 <p>Toneladas/Año Potencial</p>
             </div>
             <div class="dashboard-card">
-                <h3 id="ingresos-potencial">1.05M€</h3>
+                <h3 id="ingresos-potencial">1.60M€</h3>
                 <p>Ingresos Potenciales</p>
             </div>
             <div class="dashboard-card">
@@ -457,6 +456,8 @@
                         <option value="Polígono Industrial">Polígonos</option>
                         <option value="Empresa ESE">ESE</option>
                         <option value="Residencia/Centro">Residencias</option>
+                        <option value="Centro educativo">Educativo</option>
+                        <option value="Clínica/Sanitario">Sanitario</option>
                     </select>
                 </div>
 
@@ -536,6 +537,8 @@
                             <option value="Polígono Industrial">Polígono Industrial</option>
                             <option value="Empresa ESE">Empresa ESE</option>
                             <option value="Residencia/Centro">Residencia/Centro</option>
+                            <option value="Centro educativo">Centro educativo</option>
+                            <option value="Clínica/Sanitario">Clínica/Sanitario</option>
                         </select>
                     </div>
                 </div>
@@ -582,8 +585,9 @@
             { nombre: "Astillastur", lat: 43.3614, lng: -5.8593, ciudad: "Oviedo, Asturias", capacidad: "N/D" }
         ];
 
-        // Clientes potenciales precargados
+        // Clientes potenciales (12 originales + 15 nuevos)
         let clientes = [
+            // CLIENTES ORIGINALES
             {
                 id: 1,
                 nombre: "Miguel Fernández Ruiz",
@@ -596,7 +600,7 @@
                 lng: -3.3500,
                 segmento: "Hotel Rural",
                 volumen: 45,
-                notas: "Hotel en Sierra Nevada, dependencia gasóleo, interés sostenibilidad"
+                notas: "Hotel en Sierra Nevada, dependencia gasóleo"
             },
             {
                 id: 2,
@@ -610,7 +614,7 @@
                 lng: -3.9167,
                 segmento: "Hotel Rural",
                 volumen: 55,
-                notas: "Hotel 4*, plan sostenibilidad 2025, reducir 40% emisiones"
+                notas: "Hotel 4*, plan sostenibilidad 2025"
             },
             {
                 id: 3,
@@ -624,7 +628,7 @@
                 lng: -2.5500,
                 segmento: "Industria Agroalimentaria",
                 volumen: 85,
-                notas: "Control temperatura crítico fermentación, 45.000€/año propano"
+                notas: "Control temperatura crítico, 45.000€/año propano"
             },
             {
                 id: 4,
@@ -638,7 +642,7 @@
                 lng: -2.6000,
                 segmento: "Industria Agroalimentaria",
                 volumen: 65,
-                notas: "Bodega boutique, 38.000€/año electricidad, marketing premium"
+                notas: "Bodega boutique, 38.000€/año electricidad"
             },
             {
                 id: 5,
@@ -652,7 +656,7 @@
                 lng: -0.3763,
                 segmento: "Ayuntamiento",
                 volumen: 450,
-                notas: "Meta descarbonización 2030, 2.8M€/año presupuesto energético"
+                notas: "Meta descarbonización 2030"
             },
             {
                 id: 6,
@@ -666,7 +670,7 @@
                 lng: -0.4810,
                 segmento: "Ayuntamiento",
                 volumen: 320,
-                notas: "111 ayuntamientos provincia, fondo 11.9M€ disponible"
+                notas: "111 ayuntamientos provincia"
             },
             {
                 id: 7,
@@ -680,7 +684,7 @@
                 lng: -4.4833,
                 segmento: "Polígono Industrial",
                 volumen: 280,
-                notas: "73 empresas, sin gas natural, empresas deslocalizan por costes"
+                notas: "73 empresas, sin gas natural"
             },
             {
                 id: 8,
@@ -694,7 +698,7 @@
                 lng: -4.5000,
                 segmento: "Polígono Industrial",
                 volumen: 520,
-                notas: "39 polígonos, +5000 empresas, energía 2° mayor coste"
+                notas: "39 polígonos, +5000 empresas"
             },
             {
                 id: 9,
@@ -708,7 +712,7 @@
                 lng: 2.1864,
                 segmento: "Empresa ESE",
                 volumen: 850,
-                notas: "250 proyectos, integración Imartec, expansión Aragón/Valencia"
+                notas: "250 proyectos, expansión Aragón/Valencia"
             },
             {
                 id: 10,
@@ -722,7 +726,7 @@
                 lng: 2.1864,
                 segmento: "Empresa ESE",
                 volumen: 420,
-                notas: "50+ proyectos biomasa, clientes hospitalarios/hoteleros"
+                notas: "50+ proyectos biomasa"
             },
             {
                 id: 11,
@@ -736,7 +740,7 @@
                 lng: -8.5448,
                 segmento: "Residencia/Centro",
                 volumen: 180,
-                notas: "8 residencias Galicia, gasóleo costoso, confort 24h"
+                notas: "8 residencias Galicia"
             },
             {
                 id: 12,
@@ -750,7 +754,218 @@
                 lng: -8.5448,
                 segmento: "Residencia/Centro",
                 volumen: 220,
-                notas: "12 centros Galicia, ISO 14001, 35% costes calefacción"
+                notas: "12 centros Galicia, ISO 14001"
+            },
+            // NUEVOS CLIENTES MADRID/TOLEDO/ÁVILA
+            {
+                id: 13,
+                nombre: "Alejandro Martínez",
+                cargo: "Director Operaciones",
+                empresa: "Hotel Aravaca Village",
+                email: "reservas@aravacavillage.es",
+                telefono: "917 400 478",
+                direccion: "Avenida de Valdemarín, 166, 28023 Madrid",
+                lat: 40.4537,
+                lng: -3.7873,
+                segmento: "Hotel Rural",
+                volumen: 55,
+                notas: "Altos costes gas natural, segmento premium"
+            },
+            {
+                id: 14,
+                nombre: "Beatriz Moreno",
+                cargo: "Gerente",
+                empresa: "Residencia San Gabriel",
+                email: "sangabriel@residenciasavila.es",
+                telefono: "920 250 811",
+                direccion: "C/ Nuestra Señora de Sonsoles, 2, 05002 Ávila",
+                lat: 40.6564,
+                lng: -4.6981,
+                segmento: "Residencia/Centro",
+                volumen: 40,
+                notas: "Dependencia gasóleo alto coste"
+            },
+            {
+                id: 15,
+                nombre: "Marta Sánchez",
+                cargo: "Director Técnico",
+                empresa: "Bodega del Águila",
+                email: "info@bodegadelaguila.com",
+                telefono: "925 137 020",
+                direccion: "Calle Noblejas 5, 45311 Dos Barrios, Toledo",
+                lat: 39.9167,
+                lng: -3.5833,
+                segmento: "Industria Agroalimentaria",
+                volumen: 80,
+                notas: "Consumo elevado propano procesos térmicos"
+            },
+            {
+                id: 16,
+                nombre: "Juan Pinuaga",
+                cargo: "Gerente",
+                empresa: "Bodegas Pinuaga",
+                email: "contacto@bodegaspinuaga.com",
+                telefono: "629 05 89 00",
+                direccion: "Camino de la Bodega, 45880 Corral de Almaguer, Toledo",
+                lat: 39.7500,
+                lng: -3.1833,
+                segmento: "Industria Agroalimentaria",
+                volumen: 65,
+                notas: "Dificultad certificaciones bio"
+            },
+            {
+                id: 17,
+                nombre: "Francisco Cruz",
+                cargo: "Resp. Operaciones",
+                empresa: "Carbones y Sepiolitas S.L.",
+                email: "info@carbonesysepiolitas.es",
+                telefono: "925 190 582",
+                direccion: "Calle Toledo, 45260 Villaseca de la Sagra, Toledo",
+                lat: 40.0333,
+                lng: -3.9000,
+                segmento: "Polígono Industrial",
+                volumen: 120,
+                notas: "Costes biomasa sin contratos estables"
+            },
+            {
+                id: 18,
+                nombre: "Javier Lozano",
+                cargo: "Director",
+                empresa: "Biomasa Toledo SL",
+                email: "info@biomasatoledo.net",
+                telefono: "925 747 204",
+                direccion: "Ctra. Santa Olalla-Carpio, km 7.7, 45531 Carmena, Toledo",
+                lat: 40.1000,
+                lng: -4.5333,
+                segmento: "Empresa ESE",
+                volumen: 110,
+                notas: "Clientes exigen mayor cobertura"
+            },
+            {
+                id: 19,
+                nombre: "Marina García",
+                cargo: "Técnico Medioambiente",
+                empresa: "Ayuntamiento de Valdemorillo",
+                email: "medioambiente@valdemorillo.es",
+                telefono: "918 970 057",
+                direccion: "Plaza de la Constitución, 1, 28210 Valdemorillo, Madrid",
+                lat: 40.5011,
+                lng: -4.0611,
+                segmento: "Ayuntamiento",
+                volumen: 220,
+                notas: "Plan descarbonización eliminar gasóleo"
+            },
+            {
+                id: 20,
+                nombre: "Pablo Ramos",
+                cargo: "Director Técnico",
+                empresa: "ICAD SA",
+                email: "pramos@icadsa.com",
+                telefono: "914 562 000",
+                direccion: "Polígono San Marcos, C/ Progreso, 7, 28906 Getafe, Madrid",
+                lat: 40.3056,
+                lng: -3.7322,
+                segmento: "Polígono Industrial",
+                volumen: 180,
+                notas: "Planificación descarbonización obligatoria"
+            },
+            {
+                id: 21,
+                nombre: "Silvia García",
+                cargo: "Resp. Energías",
+                empresa: "Recinsa S.A.",
+                email: "recinsa@recinsa.es",
+                telefono: "916 651 233",
+                direccion: "Pol. Industrial Los Olivos, C/ Calidad, 30, 28906 Getafe, Madrid",
+                lat: 40.3167,
+                lng: -3.7167,
+                segmento: "Polígono Industrial",
+                volumen: 70,
+                notas: "Presión certificaciones geotermia"
+            },
+            {
+                id: 22,
+                nombre: "Luis Fernández",
+                cargo: "Gestor Infraestructuras",
+                empresa: "Grupo Airbus España",
+                email: "suministros@airbus.com",
+                telefono: "913 034 100",
+                direccion: "Avenida John Lennon, s/n, 28906 Getafe, Madrid",
+                lat: 40.2967,
+                lng: -3.7275,
+                segmento: "Polígono Industrial",
+                volumen: 350,
+                notas: "Corporate sustainability targets"
+            },
+            {
+                id: 23,
+                nombre: "Antonio Pérez",
+                cargo: "Director",
+                empresa: "Colegio San Alfonso",
+                email: "sanalfonso@colegiosostenible.org",
+                telefono: "914 078 165",
+                direccion: "Calle Goya, 19, 28001 Madrid",
+                lat: 40.4231,
+                lng: -3.6822,
+                segmento: "Centro educativo",
+                volumen: 30,
+                notas: "Renovación calefacción, transición gasóleo"
+            },
+            {
+                id: 24,
+                nombre: "María Jiménez",
+                cargo: "Gestora Sostenibilidad",
+                empresa: "Colegio La Agundia",
+                email: "info@mlagundia.org",
+                telefono: "916 759 800",
+                direccion: "Calle del Transporte, 7, 28026 Madrid",
+                lat: 40.4783,
+                lng: -3.6478,
+                segmento: "Centro educativo",
+                volumen: 20,
+                notas: "Escuela sostenible, reducción emisiones"
+            },
+            {
+                id: 25,
+                nombre: "Dr. Pablo Gómez",
+                cargo: "Gestor Mantenimiento",
+                empresa: "Clínica Médica Santa Marta",
+                email: "admin@clinicasantamarta.es",
+                telefono: "915 832 178",
+                direccion: "Calle Santa Marta, 25, 28020 Madrid",
+                lat: 40.4378,
+                lng: -3.6981,
+                segmento: "Clínica/Sanitario",
+                volumen: 60,
+                notas: "Exigencia legal climatización descarbonizada"
+            },
+            {
+                id: 26,
+                nombre: "Marta López",
+                cargo: "Técnico Medioambiente",
+                empresa: "Ayuntamiento de Humanes",
+                email: "medioambiente@ayto-humanesdemadrid.es",
+                telefono: "916 554 466",
+                direccion: "Plaza de la Constitución, 1, 28970 Humanes de Madrid",
+                lat: 40.2547,
+                lng: -3.8264,
+                segmento: "Ayuntamiento",
+                volumen: 280,
+                notas: "Modernización polígonos industriales"
+            },
+            {
+                id: 27,
+                nombre: "Francisco López",
+                cargo: "Project Manager",
+                empresa: "Distrito Natural",
+                email: "info@distritonatural.es",
+                telefono: "911 908 234",
+                direccion: "Paseo de la Aristocracia, 20, 28029 Madrid",
+                lat: 40.4667,
+                lng: -3.6833,
+                segmento: "Residencia/Centro",
+                volumen: 40,
+                notas: "Calefacción sostenible certificada Passivhaus"
             }
         ];
 
@@ -864,7 +1079,9 @@
                 'Ayuntamiento': '🏛️',
                 'Polígono Industrial': '🏭',
                 'Empresa ESE': '⚡',
-                'Residencia/Centro': '🏥'
+                'Residencia/Centro': '🏥',
+                'Centro educativo': '🎓',
+                'Clínica/Sanitario': '🏥'
             };
             return iconos[segmento] || '📍';
         }
@@ -1057,7 +1274,7 @@
                 y += 10;
             });
 
-            doc.save('naturpellet-clientes-expansion.pdf');
+            doc.save('naturpellet-clientes-expansion-actualizado.pdf');
         }
 
         function exportarCSV() {
@@ -1088,7 +1305,7 @@
             const a = document.createElement('a');
             a.setAttribute('hidden', '');
             a.setAttribute('href', url);
-            a.setAttribute('download', 'naturpellet-clientes.csv');
+            a.setAttribute('download', 'naturpellet-clientes-actualizado.csv');
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
