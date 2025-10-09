@@ -65,11 +65,28 @@
         .legend-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.9em; }
         .legend-marker { width: 16px; height: 16px; border-radius: 50%; margin-right: 10px; border: 2px solid #333; }
         .loading { text-align: center; padding: 20px; color: #6b4d32; font-weight: bold; }
+
+        /* FOOTER Y MODALES LEGALES */
+        .footer { background: #2c2c2c; color: #ccc; padding: 20px; text-align: center; margin-top: 40px; border-top: 3px solid #d4af37; }
+        .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 10px; flex-wrap: wrap; }
+        .footer-link { color: #d4af37; text-decoration: none; cursor: pointer; font-size: 0.9em; transition: color 0.3s; }
+        .footer-link:hover { color: #f1c40f; text-decoration: underline; }
+        .footer-copy { font-size: 0.85em; color: #999; margin-top: 10px; }
+        .info-modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); overflow-y: auto; }
+        .info-modal-content { background-color: white; margin: 3% auto; padding: 40px; border-radius: 12px; width: 90%; max-width: 800px; max-height: 85vh; overflow-y: auto; box-shadow: 0 5px 30px rgba(0,0,0,0.3); }
+        .info-modal-content h2 { color: #5a4a3a; border-left: 4px solid #d4af37; padding-left: 15px; margin-bottom: 20px; }
+        .info-modal-content h3 { color: #6b4d32; margin-top: 25px; margin-bottom: 10px; }
+        .info-modal-content p { line-height: 1.8; margin-bottom: 15px; text-align: justify; }
+        .info-modal-content ul { margin-left: 20px; line-height: 2; }
+        .creator-badge { background: linear-gradient(135deg, #5a4a3a 0%, #6b4d32 100%); color: white; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; }
+        .creator-badge strong { color: #d4af37; }
+
         @media (max-width: 768px) {
             .main-content { grid-template-columns: 1fr; }
             .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
             .client-info { grid-template-columns: 1fr; }
             .form-grid { grid-template-columns: 1fr; }
+            .footer-links { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
@@ -171,6 +188,20 @@
         </div>
     </div>
 
+    <!-- FOOTER LEGAL -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a class="footer-link" onclick="abrirModalInfo('acerca')">Acerca de</a>
+            <a class="footer-link" onclick="abrirModalInfo('privacidad')">Política de Privacidad</a>
+            <a class="footer-link" onclick="abrirModalInfo('terminos')">Términos de Uso</a>
+            <a class="footer-link" onclick="abrirModalInfo('licencia')">Licencia</a>
+        </div>
+        <div class="footer-copy">
+            © 2025 Naturpellet | CRM Sistema de Gestión v2.0 | Todos los derechos reservados
+        </div>
+    </footer>
+
+    <!-- MODALES DE CLIENTES Y COMPETIDORES (igual que antes) -->
     <div id="cliente-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="cerrarModal()">&times;</span>
@@ -247,6 +278,125 @@
         </div>
     </div>
 
+    <!-- MODAL: ACERCA DE -->
+    <div id="acerca-modal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="close" onclick="cerrarModalInfo('acerca')">&times;</span>
+            <h2>📋 Acerca de este Sistema</h2>
+            <h3>Naturpellet CRM v2.0</h3>
+            <p>Sistema de Gestión de Relaciones con Clientes (CRM) desarrollado específicamente para <strong>Naturpellet</strong>, empresa especializada en la producción de pellet 100% natural y ecológico con sede en Sanchonuño, Segovia.</p>
+            <h3>Características Principales</h3>
+            <ul>
+                <li>Gestión integral de clientes potenciales con geolocalización</li>
+                <li>Sistema de clasificación por estados (Potencial, Nuevo, Consolidado, Fiel, Riesgo, Perdido)</li>
+                <li>Análisis de competencia con zonas de influencia variables</li>
+                <li>Mapas interactivos con Leaflet</li>
+                <li>Generación de informes estadísticos en PDF</li>
+                <li>Exportación de datos en CSV</li>
+                <li>Sincronización en tiempo real con base de datos Supabase</li>
+            </ul>
+            <h3>Tecnologías Utilizadas</h3>
+            <ul>
+                <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript (Vanilla)</li>
+                <li><strong>Mapas:</strong> Leaflet.js 1.9.4</li>
+                <li><strong>Base de Datos:</strong> Supabase (PostgreSQL)</li>
+                <li><strong>Generación PDF:</strong> jsPDF 2.5.1</li>
+                <li><strong>Hosting:</strong> GitHub Pages</li>
+            </ul>
+            <h3>Versión</h3>
+            <p><strong>Versión:</strong> 2.0<br><strong>Fecha de lanzamiento:</strong> Octubre 2025<br><strong>Última actualización:</strong> 09/10/2025</p>
+            <div class="creator-badge">
+                <h3 style="color: #d4af37; margin: 0;">👨‍💻 Desarrollador</h3>
+                <p style="margin: 10px 0 5px 0;"><strong>Randall Vargas</strong></p>
+                <p style="font-size: 0.9em; margin: 0;">Desarrollador Full Stack & Consultor de Tecnología<br>Especialista en Soluciones CRM y Análisis de Datos</p>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9em; color: #666;">Este sistema ha sido desarrollado bajo contrato para uso exclusivo de Naturpellet. Cualquier reproducción o uso no autorizado está prohibido.</p>
+        </div>
+    </div>
+
+    <!-- MODAL: POLÍTICA DE PRIVACIDAD -->
+    <div id="privacidad-modal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="close" onclick="cerrarModalInfo('privacidad')">&times;</span>
+            <h2>🔒 Política de Privacidad</h2>
+            <p><strong>Última actualización:</strong> 09 de octubre de 2025</p>
+            <h3>1. Responsable del Tratamiento</h3>
+            <p><strong>Naturpellet</strong><br>Dirección: Salida 60, A-601, 40297 Sanchonuño, Segovia, España<br>El responsable del tratamiento de los datos personales es Naturpellet.</p>
+            <h3>2. Datos que Recopilamos</h3>
+            <p>Este sistema CRM recopila y almacena la siguiente información:</p>
+            <ul>
+                <li>Datos de contacto: nombre, cargo, email, teléfono</li>
+                <li>Datos empresariales: nombre de empresa, segmento, dirección</li>
+                <li>Datos comerciales: volumen potencial, estado del cliente, notas</li>
+                <li>Datos de geolocalización: coordenadas de ubicación de empresas</li>
+            </ul>
+            <h3>3. Finalidad del Tratamiento</h3>
+            <p>Los datos personales se utilizan exclusivamente para:</p>
+            <ul>
+                <li>Gestión de relaciones comerciales y seguimiento de clientes potenciales</li>
+                <li>Análisis de mercado y planificación estratégica de expansión</li>
+                <li>Generación de informes comerciales internos</li>
+                <li>Comunicación con clientes potenciales y actuales</li>
+            </ul>
+            <h3>4. Base Legal</h3>
+            <p>El tratamiento de datos se basa en el interés legítimo de Naturpellet para la gestión comercial y el desarrollo de su actividad empresarial.</p>
+            <h3>5. Conservación de Datos</h3>
+            <p>Los datos se conservarán mientras exista una relación comercial o potencial de negocio. Una vez finalizada la relación, los datos se conservarán durante el plazo legal establecido.</p>
+            <h3>6. Destinatarios de los Datos</h3>
+            <p>Los datos NO se cederán a terceros, salvo obligación legal. Se utilizan servicios de Supabase (alojado en la UE) para el almacenamiento seguro de datos.</p>
+            <h3>7. Derechos del Usuario</h3>
+            <p>Tiene derecho a: Acceder a sus datos personales, Rectificar datos inexactos, Solicitar la supresión de sus datos, Oponerse al tratamiento, Solicitar la limitación del tratamiento, Portabilidad de datos</p>
+            <h3>8. Seguridad</h3>
+            <p>Se implementan medidas de seguridad técnicas y organizativas apropiadas para proteger los datos personales contra acceso no autorizado, pérdida o alteración.</p>
+            <p style="margin-top: 20px; font-size: 0.85em; color: #666; font-style: italic;">Desarrollado por: <strong>Randall Vargas</strong> | Consultor de Tecnología</p>
+        </div>
+    </div>
+
+    <!-- MODAL: TÉRMINOS DE USO -->
+    <div id="terminos-modal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="close" onclick="cerrarModalInfo('terminos')">&times;</span>
+            <h2>📜 Términos de Uso</h2>
+            <p><strong>Última actualización:</strong> 09 de octubre de 2025</p>
+            <h3>1. Aceptación de los Términos</h3>
+            <p>Al acceder y utilizar este sistema CRM, usted acepta estos términos de uso. Si no está de acuerdo, no utilice el sistema.</p>
+            <h3>2. Uso Autorizado</h3>
+            <p>Este sistema está diseñado exclusivamente para: Empleados autorizados de Naturpellet, Consultores y colaboradores externos autorizados, Uso comercial interno de gestión de clientes</p>
+            <h3>3. Prohibiciones</h3>
+            <p>Está expresamente prohibido: Compartir credenciales de acceso con terceros no autorizados, Extraer datos para uso personal o de terceros, Modificar, copiar o redistribuir el código fuente, Intentar acceder a áreas restringidas del sistema, Usar el sistema para fines ilegales o no autorizados</p>
+            <h3>4. Propiedad Intelectual</h3>
+            <p>Este sistema CRM, incluyendo su código, diseño, estructura de base de datos y toda documentación asociada, es propiedad exclusiva de Naturpellet y ha sido desarrollado por <strong>Randall Vargas</strong>.</p>
+            <p>Todos los derechos están reservados. Queda prohibida su reproducción, distribución o modificación sin autorización expresa por escrito.</p>
+            <h3>5. Confidencialidad</h3>
+            <p>Toda la información contenida en este sistema es confidencial y propiedad de Naturpellet.</p>
+            <div class="creator-badge" style="margin-top: 30px;">
+                <p style="margin: 0; font-size: 0.9em;"><strong>Sistema desarrollado por:</strong><br>Randall Vargas - Consultor de Tecnología & Desarrollador Full Stack<br>Especializado en Soluciones CRM</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: LICENCIA -->
+    <div id="licencia-modal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="close" onclick="cerrarModalInfo('licencia')">&times;</span>
+            <h2>⚖️ Licencia de Software</h2>
+            <h3>Licencia de Uso Propietario</h3>
+            <p><strong>Sistema CRM Naturpellet v2.0</strong><br>Copyright © 2025 Naturpellet. Todos los derechos reservados.</p>
+            <h3>Desarrollo y Autoría</h3>
+            <p>Este software ha sido desarrollado por <strong>Randall Vargas</strong> bajo contrato para uso exclusivo de Naturpellet.</p>
+            <h3>Derechos de Autor</h3>
+            <p>El código fuente, diseño, arquitectura de base de datos, documentación y todos los elementos asociados a este sistema están protegidos por derechos de autor y son propiedad de Naturpellet.</p>
+            <h3>Tecnologías de Terceros</h3>
+            <p>Este sistema utiliza las siguientes bibliotecas de código abierto: Leaflet.js (BSD-2-Clause License), jsPDF (MIT License), Supabase Client (MIT License). Estas bibliotecas mantienen sus respectivas licencias originales.</p>
+            <div class="creator-badge" style="margin-top: 30px;">
+                <h3 style="color: #d4af37; margin: 0 0 10px 0;">Información del Desarrollador</h3>
+                <p style="margin: 5px 0;"><strong>Randall Vargas</strong><br>Desarrollador Full Stack & Consultor de Tecnología<br>Especialista en Soluciones CRM y Sistemas de Gestión</p>
+                <p style="font-size: 0.85em; margin-top: 10px; opacity: 0.9;">Para consultas técnicas o contratación de servicios de desarrollo,<br>contacte a través de los canales oficiales de Naturpellet.</p>
+            </div>
+            <p style="margin-top: 30px; text-align: center; font-size: 0.9em; color: #999;">Versión 2.0 | Octubre 2025 | Todos los derechos reservados</p>
+        </div>
+    </div>
+
     <script>
         const SUPABASE_URL = 'https://naaatgzpzfgzplqlszew.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hYWF0Z3pwemZnenBscWxzemV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MDk5NjYsImV4cCI6MjA3NTQ4NTk2Nn0.C1V7UyNxBYQyb904chvYHwRtYN6CVY_si26rHaSm3D4';
@@ -259,22 +409,18 @@
             const colores = { 'potencial': '#3498db', 'nuevo': '#2ecc71', 'consolidado': '#f1c40f', 'fiel': '#9b59b6', 'riesgo': '#e67e22', 'perdido': '#e74c3c' };
             return colores[estado] || '#d4af37';
         }
-
         function getIconoEstado(estado) {
             const iconos = { 'potencial': '🔵', 'nuevo': '🟢', 'consolidado': '🟡', 'fiel': '🟣', 'riesgo': '🟠', 'perdido': '🔴' };
             return iconos[estado] || '⚪';
         }
-
         function getColorCompetidor(tamaño) {
             const colores = { 'pequeño': '#3498db', 'mediano': '#f39c12', 'grande': '#e74c3c' };
             return colores[tamaño] || '#95a5a6';
         }
-
         function getRadioCompetidor(tamaño) {
             const radios = { 'pequeño': 100000, 'mediano': 125000, 'grande': 150000 };
             return radios[tamaño] || 120000;
         }
-
         function getIconoSegmento(segmento) {
             const iconos = { 'Hotel Rural': '🏨', 'Industria Agroalimentaria': '🍷', 'Ayuntamiento': '🏛️', 'Polígono Industrial': '🏭', 'Empresa ESE': '⚡', 'Residencia/Centro': '🏥', 'Centro educativo': '🎓', 'Clínica/Sanitario': '🏥' };
             return iconos[segmento] || '📍';
@@ -287,8 +433,7 @@
                 if (error) { console.error('Error:', error); alert('Error al cargar clientes'); return; }
                 clientes = data.map(c => ({ id: c.id, nombre: c.contacto_nombre || '', cargo: c.contacto_cargo || '', empresa: c.nombre_empresa || '', email: c.contacto_email || '', telefono: c.contacto_telefono || '', direccion: c.direccion || '', lat: parseFloat(c.latitud) || 40.0, lng: parseFloat(c.longitud) || -4.0, segmento: c.segmento || '', volumen: parseInt(c.volumen_potencial) || 0, notas: c.notas || '', estado: c.estado || 'potencial' }));
                 document.getElementById('loading-indicator').style.display = 'none';
-                cargarClientes();
-                actualizarDashboard();
+                cargarClientes(); actualizarDashboard();
                 console.log(`✅ ${clientes.length} clientes cargados`);
             } catch (err) { console.error('Error:', err); }
         }
@@ -298,8 +443,7 @@
                 const { data, error } = await supabase.from('competidores').select('*').order('created_at', { ascending: false });
                 if (error) { console.error('Error:', error); return; }
                 competidores = data.map(c => ({ id: c.id, nombre: c.nombre, lat: parseFloat(c.latitud), lng: parseFloat(c.longitud), ciudad: c.ciudad, capacidad: c.capacidad, tamaño: c.tamaño_competencia }));
-                cargarCompetidores();
-                actualizarDashboard();
+                cargarCompetidores(); actualizarDashboard();
                 console.log(`✅ ${competidores.length} competidores cargados`);
             } catch (err) { console.error('Error:', err); }
         }
@@ -309,8 +453,7 @@
                 const clienteSB = { nombre_empresa: datos.empresa, contacto_nombre: datos.nombre, contacto_cargo: datos.cargo, contacto_email: datos.email, contacto_telefono: datos.telefono, segmento: datos.segmento, direccion: datos.direccion, latitud: parseFloat(datos.lat), longitud: parseFloat(datos.lng), volumen_potencial: parseInt(datos.volumen), notas: datos.notas, estado: datos.estado };
                 const { data, error } = await supabase.from('clientes_potenciales').insert([clienteSB]).select();
                 if (error) { alert('Error: ' + error.message); return null; }
-                alert('✅ Cliente guardado');
-                return data[0];
+                alert('✅ Cliente guardado'); return data[0];
             } catch (err) { console.error('Error:', err); return null; }
         }
 
@@ -319,8 +462,7 @@
                 const clienteSB = { nombre_empresa: datos.empresa, contacto_nombre: datos.nombre, contacto_cargo: datos.cargo, contacto_email: datos.email, contacto_telefono: datos.telefono, segmento: datos.segmento, direccion: datos.direccion, latitud: parseFloat(datos.lat), longitud: parseFloat(datos.lng), volumen_potencial: parseInt(datos.volumen), notas: datos.notas, estado: datos.estado };
                 const { error } = await supabase.from('clientes_potenciales').update(clienteSB).eq('id', id);
                 if (error) { alert('Error: ' + error.message); return false; }
-                alert('✅ Cliente actualizado');
-                return true;
+                alert('✅ Cliente actualizado'); return true;
             } catch (err) { console.error('Error:', err); return false; }
         }
 
@@ -328,8 +470,7 @@
             try {
                 const { error } = await supabase.from('clientes_potenciales').delete().eq('id', id);
                 if (error) { alert('Error: ' + error.message); return false; }
-                alert('✅ Cliente eliminado');
-                return true;
+                alert('✅ Cliente eliminado'); return true;
             } catch (err) { console.error('Error:', err); return false; }
         }
 
@@ -337,8 +478,7 @@
             try {
                 const { data, error } = await supabase.from('competidores').insert([datos]).select();
                 if (error) { alert('Error: ' + error.message); return null; }
-                alert('✅ Competidor guardado');
-                return data[0];
+                alert('✅ Competidor guardado'); return data[0];
             } catch (err) { console.error('Error:', err); return null; }
         }
 
@@ -346,8 +486,7 @@
             try {
                 const { error } = await supabase.from('competidores').update(datos).eq('id', id);
                 if (error) { alert('Error: ' + error.message); return false; }
-                alert('✅ Competidor actualizado');
-                return true;
+                alert('✅ Competidor actualizado'); return true;
             } catch (err) { console.error('Error:', err); return false; }
         }
 
@@ -355,8 +494,7 @@
             try {
                 const { error } = await supabase.from('competidores').delete().eq('id', id);
                 if (error) { alert('Error: ' + error.message); return false; }
-                alert('✅ Competidor eliminado');
-                return true;
+                alert('✅ Competidor eliminado'); return true;
             } catch (err) { console.error('Error:', err); return false; }
         }
 
@@ -364,8 +502,7 @@
             mapa = L.map('map').setView([40.0, -4.0], 6);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(mapa);
             L.marker([naturpellet.lat, naturpellet.lng], { icon: L.divIcon({ html: '🐿️', iconSize: [30, 30] }) }).addTo(mapa).bindPopup(`<strong>🐿️ NATURPELLET</strong><br>${naturpellet.direccion}`);
-            cargarCompetidoresDesdeSupabase();
-            cargarClientesDesdeSupabase();
+            cargarCompetidoresDesdeSupabase(); cargarClientesDesdeSupabase();
         }
 
         function cargarClientes() {
@@ -388,16 +525,14 @@
         function cargarCompetidores() {
             markersCompetidores.forEach(m => mapa.removeLayer(m));
             circulosCompetencia.forEach(c => mapa.removeLayer(c));
-            markersCompetidores = [];
-            circulosCompetencia = [];
+            markersCompetidores = []; circulosCompetencia = [];
             competidores.forEach(c => {
                 const color = getColorCompetidor(c.tamaño);
                 const radio = getRadioCompetidor(c.tamaño);
                 const marker = L.marker([c.lat, c.lng], { icon: L.divIcon({ html: '🏭', iconSize: [25, 25] }) }).addTo(mapa);
                 marker.bindPopup(`<div style="min-width:250px;"><strong>🏭 ${c.nombre}</strong><br>${c.ciudad}<br><strong>Capacidad:</strong> ${c.capacidad}<br><strong>Tamaño:</strong> ${c.tamaño}<br><div style="margin-top:10px;"><button onclick="editarCompetidor('${c.id}')" style="margin-right:5px;padding:5px 10px;background:#f39c12;color:white;border:none;border-radius:4px;cursor:pointer;">Editar</button><button onclick="eliminarCompetidor('${c.id}')" style="padding:5px 10px;background:#e74c3c;color:white;border:none;border-radius:4px;cursor:pointer;">Eliminar</button></div></div>`);
                 const circle = L.circle([c.lat, c.lng], { color: color, fillColor: color, fillOpacity: 0.1, radius: radio, dashArray: '10, 10' }).addTo(mapa);
-                markersCompetidores.push(marker);
-                circulosCompetencia.push(circle);
+                markersCompetidores.push(marker); circulosCompetencia.push(circle);
             });
         }
 
@@ -428,12 +563,10 @@
         }
 
         function filtrarMapa() { cargarClientes(); }
-
         function toggleCompetidores() {
             const mostrar = document.getElementById('mostrar-competidores').value === 'true';
             markersCompetidores.forEach(m => { if (mostrar) m.addTo(mapa); else mapa.removeLayer(m); });
         }
-
         function toggleZonas150() {
             const mostrar = document.getElementById('mostrar-zonas').value === 'true';
             circulosCompetencia.forEach(c => { if (mostrar) c.addTo(mapa); else mapa.removeLayer(c); });
@@ -519,66 +652,41 @@
 
         async function sincronizarConSupabase() { await cargarClientesDesdeSupabase(); await cargarCompetidoresDesdeSupabase(); }
 
-        // ============================================================
-        // FUNCIÓN MEJORADA: EXPORTAR PDF CON ESTADÍSTICAS COMPLETAS
-        // ============================================================
+        // FUNCIÓN EXPORTAR PDF CON COPYRIGHT
         function exportarPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             let y = 20;
 
-            // PORTADA
-            doc.setFontSize(22);
-            doc.setFont(undefined, 'bold');
-            doc.text('NATURPELLET', 105, y, { align: 'center' });
-            y += 10;
-            doc.setFontSize(16);
-            doc.text('Informe Estadístico de Clientes', 105, y, { align: 'center' });
-            y += 8;
-            doc.setFontSize(12);
-            doc.setFont(undefined, 'normal');
-            doc.text('Plan de Expansión 2025', 105, y, { align: 'center' });
-            y += 6;
-            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }), 105, y, { align: 'center' });
-            y += 20;
+            doc.setFontSize(22); doc.setFont(undefined, 'bold');
+            doc.text('NATURPELLET', 105, y, { align: 'center' }); y += 10;
+            doc.setFontSize(16); doc.text('Informe Estadístico de Clientes', 105, y, { align: 'center' }); y += 8;
+            doc.setFontSize(12); doc.setFont(undefined, 'normal');
+            doc.text('Plan de Expansión 2025', 105, y, { align: 'center' }); y += 6;
+            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }), 105, y, { align: 'center' }); y += 20;
 
-            // RESUMEN EJECUTIVO
-            doc.setFontSize(14);
-            doc.setFont(undefined, 'bold');
-            doc.text('RESUMEN EJECUTIVO', 20, y);
-            y += 10;
+            doc.setFontSize(14); doc.setFont(undefined, 'bold');
+            doc.text('RESUMEN EJECUTIVO', 20, y); y += 10;
 
-            doc.setFontSize(10);
-            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10); doc.setFont(undefined, 'normal');
             const totalClientes = clientes.length;
             const volumenTotal = clientes.reduce((sum, c) => sum + c.volumen, 0);
             const ingresosTotal = volumenTotal * 300;
 
-            doc.text(`Total de Clientes: ${totalClientes}`, 20, y);
-            y += 6;
-            doc.text(`Volumen Total Potencial: ${volumenTotal.toLocaleString()} ton/año`, 20, y);
-            y += 6;
-            doc.text(`Ingresos Potenciales: ${(ingresosTotal / 1000000).toFixed(2)}M€`, 20, y);
-            y += 6;
-            doc.text(`Competidores Registrados: ${competidores.length}`, 20, y);
-            y += 15;
+            doc.text(`Total de Clientes: ${totalClientes}`, 20, y); y += 6;
+            doc.text(`Volumen Total Potencial: ${volumenTotal.toLocaleString()} ton/año`, 20, y); y += 6;
+            doc.text(`Ingresos Potenciales: ${(ingresosTotal / 1000000).toFixed(2)}M€`, 20, y); y += 6;
+            doc.text(`Competidores Registrados: ${competidores.length}`, 20, y); y += 15;
 
-            // ESTADÍSTICAS POR ESTADO
-            doc.setFontSize(14);
-            doc.setFont(undefined, 'bold');
-            doc.text('DISTRIBUCIÓN POR ESTADO', 20, y);
-            y += 10;
+            doc.setFontSize(14); doc.setFont(undefined, 'bold');
+            doc.text('DISTRIBUCIÓN POR ESTADO', 20, y); y += 10;
 
-            doc.setFontSize(10);
-            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10); doc.setFont(undefined, 'normal');
 
             const estadisticasEstado = {};
             clientes.forEach(c => {
-                if (!estadisticasEstado[c.estado]) {
-                    estadisticasEstado[c.estado] = { cantidad: 0, volumen: 0 };
-                }
-                estadisticasEstado[c.estado].cantidad++;
-                estadisticasEstado[c.estado].volumen += c.volumen;
+                if (!estadisticasEstado[c.estado]) estadisticasEstado[c.estado] = { cantidad: 0, volumen: 0 };
+                estadisticasEstado[c.estado].cantidad++; estadisticasEstado[c.estado].volumen += c.volumen;
             });
 
             const estados = ['potencial', 'nuevo', 'consolidado', 'fiel', 'riesgo', 'perdido'];
@@ -588,126 +696,91 @@
                 const stats = estadisticasEstado[estado] || { cantidad: 0, volumen: 0 };
                 const porcentaje = totalClientes > 0 ? ((stats.cantidad / totalClientes) * 100).toFixed(1) : 0;
                 const ingresos = (stats.volumen * 300 / 1000).toFixed(2);
-                
-                doc.setFont(undefined, 'bold');
-                doc.text(`${iconosEstado[estado]}:`, 20, y);
-                doc.setFont(undefined, 'normal');
-                doc.text(`${stats.cantidad} clientes (${porcentaje}%) | ${stats.volumen.toLocaleString()} ton | ${ingresos}K€`, 60, y);
+                doc.setFont(undefined, 'bold'); doc.text(`${iconosEstado[estado]}:`, 20, y);
+                doc.setFont(undefined, 'normal'); doc.text(`${stats.cantidad} clientes (${porcentaje}%) | ${stats.volumen.toLocaleString()} ton | ${ingresos}K€`, 60, y);
                 y += 6;
             });
 
             y += 10;
 
-            // ESTADÍSTICAS POR SEGMENTO
-            if (y > 250) {
-                doc.addPage();
-                y = 20;
-            }
+            if (y > 250) { doc.addPage(); y = 20; }
 
-            doc.setFontSize(14);
-            doc.setFont(undefined, 'bold');
-            doc.text('DISTRIBUCIÓN POR SEGMENTO', 20, y);
-            y += 10;
+            doc.setFontSize(14); doc.setFont(undefined, 'bold');
+            doc.text('DISTRIBUCIÓN POR SEGMENTO', 20, y); y += 10;
 
-            doc.setFontSize(10);
-            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10); doc.setFont(undefined, 'normal');
 
             const estadisticasSegmento = {};
             clientes.forEach(c => {
-                if (!estadisticasSegmento[c.segmento]) {
-                    estadisticasSegmento[c.segmento] = { cantidad: 0, volumen: 0 };
-                }
-                estadisticasSegmento[c.segmento].cantidad++;
-                estadisticasSegmento[c.segmento].volumen += c.volumen;
+                if (!estadisticasSegmento[c.segmento]) estadisticasSegmento[c.segmento] = { cantidad: 0, volumen: 0 };
+                estadisticasSegmento[c.segmento].cantidad++; estadisticasSegmento[c.segmento].volumen += c.volumen;
             });
 
-            const segmentosOrdenados = Object.keys(estadisticasSegmento).sort((a, b) => 
-                estadisticasSegmento[b].volumen - estadisticasSegmento[a].volumen
-            );
+            const segmentosOrdenados = Object.keys(estadisticasSegmento).sort((a, b) => estadisticasSegmento[b].volumen - estadisticasSegmento[a].volumen);
 
             segmentosOrdenados.forEach(segmento => {
                 const stats = estadisticasSegmento[segmento];
                 const porcentaje = totalClientes > 0 ? ((stats.cantidad / totalClientes) * 100).toFixed(1) : 0;
                 const ingresos = (stats.volumen * 300 / 1000).toFixed(2);
-                
-                if (y > 270) {
-                    doc.addPage();
-                    y = 20;
-                }
-                
-                doc.setFont(undefined, 'bold');
-                doc.text(`${segmento}:`, 20, y);
-                doc.setFont(undefined, 'normal');
-                doc.text(`${stats.cantidad} (${porcentaje}%) | ${stats.volumen.toLocaleString()} ton | ${ingresos}K€`, 80, y);
+                if (y > 270) { doc.addPage(); y = 20; }
+                doc.setFont(undefined, 'bold'); doc.text(`${segmento}:`, 20, y);
+                doc.setFont(undefined, 'normal'); doc.text(`${stats.cantidad} (${porcentaje}%) | ${stats.volumen.toLocaleString()} ton | ${ingresos}K€`, 80, y);
                 y += 6;
             });
 
             y += 10;
 
-            // TOP 10 CLIENTES POR VOLUMEN
-            if (y > 240) {
-                doc.addPage();
-                y = 20;
-            }
+            if (y > 240) { doc.addPage(); y = 20; }
 
-            doc.setFontSize(14);
-            doc.setFont(undefined, 'bold');
-            doc.text('TOP 10 CLIENTES POR VOLUMEN', 20, y);
-            y += 10;
+            doc.setFontSize(14); doc.setFont(undefined, 'bold');
+            doc.text('TOP 10 CLIENTES POR VOLUMEN', 20, y); y += 10;
 
             doc.setFontSize(9);
             const clientesOrdenados = [...clientes].sort((a, b) => b.volumen - a.volumen).slice(0, 10);
 
             clientesOrdenados.forEach((cliente, index) => {
-                if (y > 270) {
-                    doc.addPage();
-                    y = 20;
-                }
-
-                doc.setFont(undefined, 'bold');
-                doc.text(`${index + 1}.`, 20, y);
-                doc.setFont(undefined, 'normal');
-                doc.text(`${cliente.empresa} | ${cliente.segmento}`, 25, y);
-                y += 5;
+                if (y > 270) { doc.addPage(); y = 20; }
+                doc.setFont(undefined, 'bold'); doc.text(`${index + 1}.`, 20, y);
+                doc.setFont(undefined, 'normal'); doc.text(`${cliente.empresa} | ${cliente.segmento}`, 25, y); y += 5;
                 doc.text(`Estado: ${cliente.estado} | Volumen: ${cliente.volumen.toLocaleString()} ton/año | Ingresos: ${(cliente.volumen * 300 / 1000).toFixed(2)}K€`, 25, y);
                 y += 8;
             });
 
-            // LISTADO COMPLETO DE CLIENTES
-            doc.addPage();
-            y = 20;
-            doc.setFontSize(14);
-            doc.setFont(undefined, 'bold');
-            doc.text('LISTADO COMPLETO DE CLIENTES', 20, y);
-            y += 10;
+            doc.addPage(); y = 20;
+            doc.setFontSize(14); doc.setFont(undefined, 'bold');
+            doc.text('LISTADO COMPLETO DE CLIENTES', 20, y); y += 10;
 
             doc.setFontSize(8);
             clientes.forEach((cliente, index) => {
-                if (y > 270) {
-                    doc.addPage();
-                    y = 20;
-                }
-
-                doc.setFont(undefined, 'bold');
-                doc.text(`${index + 1}. ${cliente.empresa}`, 20, y);
-                y += 4;
-                doc.setFont(undefined, 'normal');
-                doc.text(`Estado: ${cliente.estado} | Segmento: ${cliente.segmento}`, 25, y);
-                y += 4;
-                doc.text(`Contacto: ${cliente.nombre} (${cliente.cargo}) | ${cliente.email}`, 25, y);
-                y += 4;
-                doc.text(`Teléfono: ${cliente.telefono} | Volumen: ${cliente.volumen} ton/año`, 25, y);
-                y += 4;
-                doc.text(`Dirección: ${cliente.direccion}`, 25, y);
-                y += 7;
+                if (y > 270) { doc.addPage(); y = 20; }
+                doc.setFont(undefined, 'bold'); doc.text(`${index + 1}. ${cliente.empresa}`, 20, y); y += 4;
+                doc.setFont(undefined, 'normal'); doc.text(`Estado: ${cliente.estado} | Segmento: ${cliente.segmento}`, 25, y); y += 4;
+                doc.text(`Contacto: ${cliente.nombre} (${cliente.cargo}) | ${cliente.email}`, 25, y); y += 4;
+                doc.text(`Teléfono: ${cliente.telefono} | Volumen: ${cliente.volumen} ton/año`, 25, y); y += 4;
+                doc.text(`Dirección: ${cliente.direccion}`, 25, y); y += 7;
             });
 
-            // PIE DE PÁGINA
+            // PÁGINA DE COPYRIGHT
+            doc.addPage(); y = 100;
+            doc.setFontSize(16); doc.setFont(undefined, 'bold');
+            doc.text('Información Legal y Copyright', 105, y, { align: 'center' }); y += 20;
+            doc.setFontSize(10); doc.setFont(undefined, 'normal');
+            doc.text('© 2025 Naturpellet. Todos los derechos reservados.', 105, y, { align: 'center' }); y += 10;
+            doc.text('Sistema CRM Naturpellet v2.0', 105, y, { align: 'center' }); y += 20;
+            doc.setFontSize(9);
+            doc.text('Este documento contiene información confidencial y es propiedad exclusiva de Naturpellet.', 105, y, { align: 'center' }); y += 6;
+            doc.text('Queda prohibida su reproducción, distribución o uso no autorizado.', 105, y, { align: 'center' }); y += 15;
+            doc.setFont(undefined, 'italic');
+            doc.text('Desarrollado por: Randall Vargas', 105, y, { align: 'center' }); y += 6;
+            doc.text('Consultor de Tecnología & Desarrollador Full Stack', 105, y, { align: 'center' }); y += 6;
+            doc.text('Especialista en Soluciones CRM', 105, y, { align: 'center' }); y += 20;
+            doc.setFont(undefined, 'normal'); doc.setFontSize(8);
+            doc.text('Fecha de generación: ' + new Date().toLocaleString('es-ES'), 105, y, { align: 'center' }); y += 5;
+            doc.text('Generado desde: Naturpellet CRM System v2.0', 105, y, { align: 'center' });
+
             const totalPaginas = doc.internal.getNumberOfPages();
             for (let i = 1; i <= totalPaginas; i++) {
-                doc.setPage(i);
-                doc.setFontSize(8);
-                doc.setFont(undefined, 'normal');
+                doc.setPage(i); doc.setFontSize(8); doc.setFont(undefined, 'normal');
                 doc.text(`Página ${i} de ${totalPaginas}`, 105, 290, { align: 'center' });
                 doc.text('Naturpellet - Informe Confidencial', 105, 285, { align: 'center' });
             }
@@ -725,6 +798,10 @@
             a.href = url; a.download = 'clientes.csv'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
         }
 
+        // FUNCIONES PARA MODALES DE INFORMACIÓN LEGAL
+        function abrirModalInfo(tipo) { document.getElementById(tipo + '-modal').style.display = 'block'; }
+        function cerrarModalInfo(tipo) { document.getElementById(tipo + '-modal').style.display = 'none'; }
+
         document.addEventListener('DOMContentLoaded', function() {
             const fecha = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
             document.getElementById('fecha-actual').textContent = fecha;
@@ -734,6 +811,7 @@
         window.onclick = function(event) {
             if (event.target === document.getElementById('cliente-modal')) cerrarModal();
             if (event.target === document.getElementById('competidor-modal')) cerrarModalCompetidor();
+            if (event.target.classList.contains('info-modal')) event.target.style.display = 'none';
         }
     </script>
 </body>
