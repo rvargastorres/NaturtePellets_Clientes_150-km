@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM Naturpellet - Seguimiento Completo de Prospectos</title>
+    <title>CRM Naturpellet - 30 Contactos Precargados</title>
     <style>
         * {
             box-sizing: border-box;
@@ -358,7 +358,7 @@
 <body>
     <header>
         <h1>🐿️ CRM Naturpellet</h1>
-        <p>Sistema de Seguimiento Completo de Prospectos B2B</p>
+        <p>Sistema de Seguimiento Completo - 30 Prospectos Precargados</p>
     </header>
 
     <div class="container">
@@ -525,8 +525,9 @@
         let editingIndex = -1;
         let selectedFiles = [];
 
-        // Datos precargados de ejemplo
+        // TODOS LOS 30 CONTACTOS PRECARGADOS
         const initialProspects = [
+            // HOTELES Y TURISMO RURAL (5)
             {
                 name: "Juan Pérez García",
                 role: "Director General",
@@ -543,6 +544,68 @@
                 lastContact: new Date().toISOString()
             },
             {
+                name: "Ana Ruiz Fernández",
+                role: "Responsable Sostenibilidad",
+                company: "Casa Rural La Huella",
+                email: "aruiz@lahuella.com",
+                phone: "650 234 567",
+                address: "C/ Real, 12, Cuéllar, Segovia",
+                segment: "Hotel Rural",
+                status: "Contacto inicial",
+                potentialVolume: 25,
+                notes: "12 habitaciones, proyecto eco-friendly iniciando. Muy interesados en sostenibilidad.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Miguel Sánchez López",
+                role: "Gerente de Operaciones",
+                company: "Hotel Sierra de Prados",
+                email: "msanchez@sierradeprados.es",
+                phone: "630 345 678",
+                address: "Avda. de la Estación, 5, Soria",
+                segment: "Hotel Rural",
+                status: "Cotización enviada",
+                potentialVolume: 75,
+                notes: "40 habitaciones, piscina interior, restaurante gourmet. Cotización para temporada alta.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Laura Moreno Martínez",
+                role: "Directora de Marketing",
+                company: "Posada Rural Molino Viejo",
+                email: "lmoreno@molinoviejo.com",
+                phone: "610 456 789",
+                address: "Ctra. Ávila-Segovia km 65, Ávila",
+                segment: "Hotel Rural",
+                status: "En negociación",
+                potentialVolume: 40,
+                notes: "22 habitaciones, restaurante con productos km 0. Negociando contrato plurianual.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Pedro González Díaz",
+                role: "Director Técnico",
+                company: "Hotel El Encinar",
+                email: "pgonzalez@elencinar.com",
+                phone: "620 567 890",
+                address: "C/ Fuente, 8, Pedraza, Segovia",
+                segment: "Hotel Rural",
+                status: "Compra realizada",
+                potentialVolume: 35,
+                notes: "Calefacción actual propano, 35% tasa ocupación. Cliente satisfecho, primera compra realizada.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+
+            // AYUNTAMIENTOS (5)
+            {
                 name: "María López Santos",
                 role: "Alcaldesa",
                 company: "Ayuntamiento de Cuéllar",
@@ -557,6 +620,68 @@
                 dateCreated: new Date().toISOString(),
                 lastContact: new Date().toISOString()
             },
+            {
+                name: "Carlos Ruiz Hernández",
+                role: "Concejal de Obras",
+                company: "Ayuntamiento de Coca",
+                email: "cruiz@coca.es",
+                phone: "923 422 000",
+                address: "C/ Cervantes, 3, Coca, Segovia",
+                segment: "Ayuntamiento",
+                status: "En seguimiento",
+                potentialVolume: 90,
+                notes: "Polideportivo, biblioteca, colegio, consumo actual 72.000€/año. Pendiente aprobación pleno.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Ana Belén García",
+                role: "Concejal de Servicios",
+                company: "Ayuntamiento de Bernardos",
+                email: "abgarcia@bernardos.es",
+                phone: "923 423 000",
+                address: "C/ Real, 10, Bernardos, Segovia",
+                segment: "Ayuntamiento",
+                status: "Contacto inicial",
+                potentialVolume: 60,
+                notes: "5 edificios, presupuesto anual 1.2M€. Primera toma de contacto muy positiva.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "José Martín Ruiz",
+                role: "Secretario Municipal",
+                company: "Ayuntamiento de Nava de la Asunción",
+                email: "jmartin@navaasuncion.es",
+                phone: "923 424 000",
+                address: "Avda. Constitución, 2, Nava, Segovia",
+                segment: "Ayuntamiento",
+                status: "En negociación",
+                potentialVolume: 50,
+                notes: "6 edificios, en proceso de certificación energética. Interés en subvenciones.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Laura Fernández Pérez",
+                role: "Técnica de Sostenibilidad",
+                company: "Diputación Provincial de Segovia",
+                email: "lfernandez@dipsegovia.es",
+                phone: "923 425 000",
+                address: "Plaza de la Provincia, 1, Segovia",
+                segment: "Ayuntamiento",
+                status: "Servicio post-venta",
+                potentialVolume: 200,
+                notes: "Gestiona subvenciones 200-500K€/año, proyecto redes calor biomasa. Cliente recurrente.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+
+            // INDUSTRIA AGROALIMENTARIA (5)
             {
                 name: "Elena Martínez Gómez",
                 role: "Directora de Producción",
@@ -573,6 +698,145 @@
                 lastContact: new Date().toISOString()
             },
             {
+                name: "Roberto Sánchez López",
+                role: "Responsable de Procesos",
+                company: "José Pariente",
+                email: "rsanchez@josepariente.es",
+                phone: "983 234 567",
+                address: "Pol. Ind. Los Derramaderos, Rueda",
+                segment: "Industria Agroalimentaria",
+                status: "Cotización enviada",
+                potentialVolume: 65,
+                notes: "Control temperatura fermentación, certificaciones DO Rueda. Propuesta técnica enviada.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Marta Ruiz Fernández",
+                role: "Técnica de Calidad",
+                company: "Marqués de Riscal",
+                email: "mruiz@marquesderiscal.com",
+                phone: "945 345 678",
+                address: "Ctra. Valladolid km 3, Elciego",
+                segment: "Industria Agroalimentaria",
+                status: "En seguimiento",
+                potentialVolume: 95,
+                notes: "Necesidad calor constante pasteurización, marketing km 0. Seguimiento mensual.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Pablo Gómez Díaz",
+                role: "Jefe de Planta",
+                company: "Cooperativa Nuestra Señora del Pilar",
+                email: "pgomez@nsdelpilar.coop",
+                phone: "979 456 789",
+                address: "Ctra. Palencia km 5, Boada de Campos",
+                segment: "Industria Agroalimentaria",
+                status: "Compra realizada",
+                potentialVolume: 250,
+                notes: "Secadero cereales, volumen 200-300 ton pellets/año. Contrato anual firmado.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Isabel Castro Morales",
+                role: "Directora Técnica",
+                company: "Quesería La Lechuguita",
+                email: "icastro@lechuguitaqueseria.com",
+                phone: "983 567 890",
+                address: "C/ Ganaderos, 14, Medina del Campo",
+                segment: "Industria Agroalimentaria",
+                status: "Contacto inicial",
+                potentialVolume: 45,
+                notes: "Pasteurización, limpieza CIP compatible con biomasa. Primera reunión programada.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+
+            // POLÍGONOS INDUSTRIALES (5)
+            {
+                name: "Luis Ortega Pérez",
+                role: "Director de Planta",
+                company: "Tableros Losán - Pol. Hontoria",
+                email: "lortega@tableroslosan.es",
+                phone: "921 123 456",
+                address: "Ctra. Segovia-Valladolid km 20",
+                segment: "Polígono Industrial",
+                status: "En seguimiento",
+                potentialVolume: 300,
+                notes: "45 empresas, iniciativa red calor SOMACYL. Proyecto conjunto polígono.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Ana Benítez García",
+                role: "Gerente",
+                company: "Mecanotubo - Pol. Hontoria",
+                email: "abenitez@mecanotubo.es",
+                phone: "921 234 567",
+                address: "Ctra. Segovia-Valencia km 18",
+                segment: "Polígono Industrial",
+                status: "Cotización enviada",
+                potentialVolume: 180,
+                notes: "Consumo estimado 1,500 ton/año polígono completo. Cotización central térmica.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "José Ramón Nieto",
+                role: "CEO",
+                company: "Transportes Nieto - Pol. Hontoria",
+                email: "jnieto@transportesnieto.es",
+                phone: "921 345 678",
+                address: "Pol. Hontoria, parcela 12, Segovia",
+                segment: "Polígono Industrial",
+                status: "En negociación",
+                potentialVolume: 120,
+                notes: "Flota logística con demanda térmica en talleres y oficinas. Negociando condiciones.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Marta Ruiz López",
+                role: "Responsable de Mantenimiento",
+                company: "Polígono Industrial de Coca",
+                email: "mruiz@poligonococa.es",
+                phone: "921 456 789",
+                address: "Ctra. Madrid - Segovia km 18, Coca",
+                segment: "Polígono Industrial",
+                status: "Contacto inicial",
+                potentialVolume: 200,
+                notes: "12 industrias medianas, proximidad 18 km planta. Primera visita programada.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Pedro González Díaz",
+                role: "Jefe de Operaciones",
+                company: "Carpinterías El Roble - Pol. Villalón",
+                email: "pgonzalez@carpinteriasroble.es",
+                phone: "947 567 890",
+                address: "Pol. Villalonquejar, Burgos",
+                segment: "Polígono Industrial",
+                status: "Compra realizada",
+                potentialVolume: 85,
+                notes: "Talleres madera, demanda naves otoñales/hivernales. Primera entrega realizada.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+
+            // EMPRESAS ESE (5)
+            {
                 name: "José Manuel Díaz",
                 role: "Director Comercial",
                 company: "Gebio Energía",
@@ -588,6 +852,68 @@
                 lastContact: new Date().toISOString()
             },
             {
+                name: "Laura Fernández Pérez",
+                role: "Gerente de Proyectos",
+                company: "Termosun",
+                email: "lfernandez@termosun.com",
+                phone: "983 789 012",
+                address: "Pol. Ind. San Cristóbal, Valladolid",
+                segment: "Empresa ESE",
+                status: "Servicio post-venta",
+                potentialVolume: 600,
+                notes: "Referencia instalación Castilla Termal Valbuena. Cliente premium satisfecho.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Miguel Ángel Torres",
+                role: "Director Técnico",
+                company: "EnergosESE",
+                email: "mtorres@energo-ese.es",
+                phone: "979 890 123",
+                address: "C/ Industria 3, Palencia",
+                segment: "Empresa ESE",
+                status: "En seguimiento",
+                potentialVolume: 450,
+                notes: "Especialistas biomasa + fotovoltaica, contratos llave en mano. Seguimiento trimestral.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Ana López Martínez",
+                role: "Responsable Alianzas",
+                company: "Biomasa Solutions",
+                email: "alopez@biomasasolutions.es",
+                phone: "947 901 234",
+                address: "C/ Energía 45, Burgos",
+                segment: "Empresa ESE",
+                status: "En negociación",
+                potentialVolume: 350,
+                notes: "Partners con clientes hoteleros + comunidades. Negociando acuerdo marco.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Pablo Ruiz Sánchez",
+                role: "Jefe Ventas",
+                company: "EcoEnergía Castilla",
+                email: "pruiz@ecoenergia.es",
+                phone: "923 012 345",
+                address: "Ctra. Ávila km 10, Segovia",
+                segment: "Empresa ESE",
+                status: "Cotización enviada",
+                potentialVolume: 280,
+                notes: "Suministro pellets + mantenimiento integral. Cotización anual enviada.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+
+            // RESIDENCIAS Y CENTROS (5)
+            {
                 name: "Cristina Martín Ruiz",
                 role: "Directora",
                 company: "Residencia San Telmo",
@@ -601,12 +927,72 @@
                 files: [],
                 dateCreated: new Date().toISOString(),
                 lastContact: new Date().toISOString()
+            },
+            {
+                name: "María Fernanda López",
+                role: "Gestora de Instalaciones",
+                company: "DomusVi Nuestra Señora del Camino",
+                email: "mflopez@domusvi.es",
+                phone: "987 234 567",
+                address: "Avda. León 10, León",
+                segment: "Residencia/Centro",
+                status: "En seguimiento",
+                potentialVolume: 140,
+                notes: "360 plazas, gestión privada, calefacción 24h. Evaluando propuesta integral.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Luis García Torres",
+                role: "Responsable Mantenimiento",
+                company: "Residencia San Froilán",
+                email: "lgarcia@frolanresidencia.es",
+                phone: "987 345 678",
+                address: "C/ Vilecha 5, León",
+                segment: "Residencia/Centro",
+                status: "Cotización enviada",
+                potentialVolume: 45,
+                notes: "39 plazas, centro pequeño, alto confort térmico. Cotización personalizada enviada.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Ana Belén Pérez",
+                role: "Coordinadora",
+                company: "Centro Ocupacional El Roble",
+                email: "abperez@elrobleocupac.es",
+                phone: "921 567 890",
+                address: "Ctra. Segovia km 32, Segovia",
+                segment: "Residencia/Centro",
+                status: "Contacto inicial",
+                potentialVolume: 25,
+                notes: "10 usuarios continuos, accesibilidad + eficiencia. Primera reunión muy positiva.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
+            },
+            {
+                name: "Pablo Hernández Díaz",
+                role: "Técnico de Servicios",
+                company: "Centro Discapacidad La Esperanza",
+                email: "phdz@laesperanza.valladolid.es",
+                phone: "983 678 901",
+                address: "C/ Mayor 2, Valladolid",
+                segment: "Residencia/Centro",
+                status: "En negociación",
+                potentialVolume: 55,
+                notes: "Residencia + ocupacional, confort crítico y continuo. Negociando condiciones especiales.",
+                files: [],
+                dateCreated: new Date().toISOString(),
+                lastContact: new Date().toISOString()
             }
         ];
 
         // Inicializar aplicación
         function initApp() {
-            const stored = localStorage.getItem('naturpellet_prospects');
+            const stored = localStorage.getItem('naturpellet_prospects_30');
             if (stored) {
                 prospects = JSON.parse(stored);
             } else {
@@ -873,7 +1259,7 @@
         }
 
         function saveProspects() {
-            localStorage.setItem('naturpellet_prospects', JSON.stringify(prospects));
+            localStorage.setItem('naturpellet_prospects_30', JSON.stringify(prospects));
         }
 
         // Inicializar cuando cargue la página
