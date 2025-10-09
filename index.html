@@ -159,7 +159,7 @@
                 <button class="btn-primary" onclick="abrirModalAgregar()">➕ Agregar Cliente</button>
                 <button class="btn-primary" onclick="abrirModalAgregarCompetidor()">🏭 Agregar Competidor</button>
                 <button class="btn-secondary" onclick="sincronizarConSupabase()">🔄 Sincronizar Base Datos</button>
-                <button class="btn-secondary" onclick="exportarPDF()">📄 Exportar PDF</button>
+                <button class="btn-secondary" onclick="exportarPDF()">📄 Exportar Informe Estadístico</button>
                 <button class="btn-secondary" onclick="exportarCSV()">📊 Exportar CSV</button>
             </div>
         </div>
@@ -519,14 +519,200 @@
 
         async function sincronizarConSupabase() { await cargarClientesDesdeSupabase(); await cargarCompetidoresDesdeSupabase(); }
 
+        // ============================================================
+        // FUNCIÓN MEJORADA: EXPORTAR PDF CON ESTADÍSTICAS COMPLETAS
+        // ============================================================
         function exportarPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.setFontSize(20); doc.text('NATURPELLET - Informe Expansión', 20, 20);
-            doc.setFontSize(12); doc.text('Plan Expansión 2025', 20, 30); doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES'), 20, 40);
-            doc.setFontSize(14); doc.text('Resumen:', 20, 55);
-            doc.setFontSize(10); doc.text(`Clientes: ${clientes.length}`, 20, 65); doc.text(`Volumen: ${clientes.reduce((s, c) => s + c.volumen, 0).toLocaleString()} ton/año`, 20, 75); doc.text(`Ingresos: ${(clientes.reduce((s, c) => s + c.volumen, 0) * 300 / 1000000).toFixed(2)}M€`, 20, 85);
-            doc.save('naturpellet-informe.pdf');
+            let y = 20;
+
+            // PORTADA
+            doc.setFontSize(22);
+            doc.setFont(undefined, 'bold');
+            doc.text('NATURPELLET', 105, y, { align: 'center' });
+            y += 10;
+            doc.setFontSize(16);
+            doc.text('Informe Estadístico de Clientes', 105, y, { align: 'center' });
+            y += 8;
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'normal');
+            doc.text('Plan de Expansión 2025', 105, y, { align: 'center' });
+            y += 6;
+            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }), 105, y, { align: 'center' });
+            y += 20;
+
+            // RESUMEN EJECUTIVO
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text('RESUMEN EJECUTIVO', 20, y);
+            y += 10;
+
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            const totalClientes = clientes.length;
+            const volumenTotal = clientes.reduce((sum, c) => sum + c.volumen, 0);
+            const ingresosTotal = volumenTotal * 300;
+
+            doc.text(`Total de Clientes: ${totalClientes}`, 20, y);
+            y += 6;
+            doc.text(`Volumen Total Potencial: ${volumenTotal.toLocaleString()} ton/año`, 20, y);
+            y += 6;
+            doc.text(`Ingresos Potenciales: ${(ingresosTotal / 1000000).toFixed(2)}M€`, 20, y);
+            y += 6;
+            doc.text(`Competidores Registrados: ${competidores.length}`, 20, y);
+            y += 15;
+
+            // ESTADÍSTICAS POR ESTADO
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text('DISTRIBUCIÓN POR ESTADO', 20, y);
+            y += 10;
+
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+
+            const estadisticasEstado = {};
+            clientes.forEach(c => {
+                if (!estadisticasEstado[c.estado]) {
+                    estadisticasEstado[c.estado] = { cantidad: 0, volumen: 0 };
+                }
+                estadisticasEstado[c.estado].cantidad++;
+                estadisticasEstado[c.estado].volumen += c.volumen;
+            });
+
+            const estados = ['potencial', 'nuevo', 'consolidado', 'fiel', 'riesgo', 'perdido'];
+            const iconosEstado = { 'potencial': 'Potencial', 'nuevo': 'Nuevo', 'consolidado': 'Consolidado', 'fiel': 'Fiel', 'riesgo': 'Riesgo', 'perdido': 'Perdido' };
+
+            estados.forEach(estado => {
+                const stats = estadisticasEstado[estado] || { cantidad: 0, volumen: 0 };
+                const porcentaje = totalClientes > 0 ? ((stats.cantidad / totalClientes) * 100).toFixed(1) : 0;
+                const ingresos = (stats.volumen * 300 / 1000).toFixed(2);
+                
+                doc.setFont(undefined, 'bold');
+                doc.text(`${iconosEstado[estado]}:`, 20, y);
+                doc.setFont(undefined, 'normal');
+                doc.text(`${stats.cantidad} clientes (${porcentaje}%) | ${stats.volumen.toLocaleString()} ton | ${ingresos}K€`, 60, y);
+                y += 6;
+            });
+
+            y += 10;
+
+            // ESTADÍSTICAS POR SEGMENTO
+            if (y > 250) {
+                doc.addPage();
+                y = 20;
+            }
+
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text('DISTRIBUCIÓN POR SEGMENTO', 20, y);
+            y += 10;
+
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+
+            const estadisticasSegmento = {};
+            clientes.forEach(c => {
+                if (!estadisticasSegmento[c.segmento]) {
+                    estadisticasSegmento[c.segmento] = { cantidad: 0, volumen: 0 };
+                }
+                estadisticasSegmento[c.segmento].cantidad++;
+                estadisticasSegmento[c.segmento].volumen += c.volumen;
+            });
+
+            const segmentosOrdenados = Object.keys(estadisticasSegmento).sort((a, b) => 
+                estadisticasSegmento[b].volumen - estadisticasSegmento[a].volumen
+            );
+
+            segmentosOrdenados.forEach(segmento => {
+                const stats = estadisticasSegmento[segmento];
+                const porcentaje = totalClientes > 0 ? ((stats.cantidad / totalClientes) * 100).toFixed(1) : 0;
+                const ingresos = (stats.volumen * 300 / 1000).toFixed(2);
+                
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                }
+                
+                doc.setFont(undefined, 'bold');
+                doc.text(`${segmento}:`, 20, y);
+                doc.setFont(undefined, 'normal');
+                doc.text(`${stats.cantidad} (${porcentaje}%) | ${stats.volumen.toLocaleString()} ton | ${ingresos}K€`, 80, y);
+                y += 6;
+            });
+
+            y += 10;
+
+            // TOP 10 CLIENTES POR VOLUMEN
+            if (y > 240) {
+                doc.addPage();
+                y = 20;
+            }
+
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text('TOP 10 CLIENTES POR VOLUMEN', 20, y);
+            y += 10;
+
+            doc.setFontSize(9);
+            const clientesOrdenados = [...clientes].sort((a, b) => b.volumen - a.volumen).slice(0, 10);
+
+            clientesOrdenados.forEach((cliente, index) => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                doc.setFont(undefined, 'bold');
+                doc.text(`${index + 1}.`, 20, y);
+                doc.setFont(undefined, 'normal');
+                doc.text(`${cliente.empresa} | ${cliente.segmento}`, 25, y);
+                y += 5;
+                doc.text(`Estado: ${cliente.estado} | Volumen: ${cliente.volumen.toLocaleString()} ton/año | Ingresos: ${(cliente.volumen * 300 / 1000).toFixed(2)}K€`, 25, y);
+                y += 8;
+            });
+
+            // LISTADO COMPLETO DE CLIENTES
+            doc.addPage();
+            y = 20;
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text('LISTADO COMPLETO DE CLIENTES', 20, y);
+            y += 10;
+
+            doc.setFontSize(8);
+            clientes.forEach((cliente, index) => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                doc.setFont(undefined, 'bold');
+                doc.text(`${index + 1}. ${cliente.empresa}`, 20, y);
+                y += 4;
+                doc.setFont(undefined, 'normal');
+                doc.text(`Estado: ${cliente.estado} | Segmento: ${cliente.segmento}`, 25, y);
+                y += 4;
+                doc.text(`Contacto: ${cliente.nombre} (${cliente.cargo}) | ${cliente.email}`, 25, y);
+                y += 4;
+                doc.text(`Teléfono: ${cliente.telefono} | Volumen: ${cliente.volumen} ton/año`, 25, y);
+                y += 4;
+                doc.text(`Dirección: ${cliente.direccion}`, 25, y);
+                y += 7;
+            });
+
+            // PIE DE PÁGINA
+            const totalPaginas = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= totalPaginas; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.setFont(undefined, 'normal');
+                doc.text(`Página ${i} de ${totalPaginas}`, 105, 290, { align: 'center' });
+                doc.text('Naturpellet - Informe Confidencial', 105, 285, { align: 'center' });
+            }
+
+            doc.save('naturpellet-informe-estadistico-clientes.pdf');
         }
 
         function exportarCSV() {
